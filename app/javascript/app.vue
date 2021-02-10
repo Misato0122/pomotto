@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <TheHeader />
+    <router-view />
+    <TheFooter />
   </div>
 </template>
 
 <script>
+import TheHeader from './components/TheHeader';
+import TheFooter from './components/TheFooter';
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
+  components: {
+    TheHeader,
+    TheFooter
   }
 }
 </script>

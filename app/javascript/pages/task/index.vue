@@ -3,6 +3,7 @@
     <p>タスクページ</p>
     <router-link
       :to="{ name: 'TopIndex' }"
+      class="btn btn-primary mr-5"
     >
     はじめる
     </router-link>

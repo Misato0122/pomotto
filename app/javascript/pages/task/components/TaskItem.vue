@@ -6,6 +6,11 @@
         <h5 class="card-title">タスクタイトル</h5>
         <p class="card-text">タスク締め切り日</p>
         <button class="btn btn-secondary">スタート</button>
+        <router-link
+          :to="{ name: 'TaskDetail'}"
+        >
+          タスク詳細
+        </router-link>
       </div>
     </div>
   </div>

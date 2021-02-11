@@ -31,6 +31,7 @@
     >
     戻る
     </router-link>
+    
     <!-- タスク作成モーダル -->
     <transition name="fade">
       <TaskCreateModal

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import TopIndex from "../pages/top/index.vue";
 import TaskIndex from "../pages/task/index.vue";
+import TaskDetail from "../pages/task/components/TaskDetail.vue";
 
 
 Vue.use(VueRouter)
@@ -19,6 +20,11 @@ const router = new VueRouter({
     path: '/tasks',
     component: TaskIndex,
     name: "TaskIndex"
+    },
+    {
+      path: '/task/show',
+      component: TaskDetail,
+      name: 'TaskDetail'
     }
   ]
 })

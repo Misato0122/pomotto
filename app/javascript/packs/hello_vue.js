@@ -10,6 +10,8 @@ import App from '../app.vue'
 import router from '../router/router.js'
 import 'bootstrap/dist/css/bootstrap.css'
 
+Vue.config.productionTip = false
+
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,

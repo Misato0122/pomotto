@@ -21,21 +21,12 @@
               class="form-control"
             />
             <label for="deadline">締め切り日</label>
-            <select
+            <input 
+              type="date"
               id="deadline"
               v-model="task.deadline"
               class="form-control"
             >
-              <option value="todo">
-                TODO
-              </option>
-              <option value="doing">
-                DOING
-              </option>
-              <option value="done">
-                DONE
-              </option>
-            </select>
           </div>
           <div class="modal-footer">
             <button

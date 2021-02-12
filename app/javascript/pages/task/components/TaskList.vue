@@ -11,6 +11,7 @@
       <TaskItem 
       :key="number"
       :number="number"
+      @handleOpenPomodoroTimer="handleOpenPomodoroTimer"
       />
       </template>
     </div>
@@ -36,6 +37,11 @@ export default {
   },
   components: {
     TaskItem
+  },
+  methods: {
+    handleOpenPomodoroTimer() {
+      this.$emit('handleOpenPomodoroTimer');
+    }
   }
 }
 </script>

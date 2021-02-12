@@ -5,7 +5,7 @@
       {{ number }}
         <h5 class="card-title">タスクタイトル</h5>
         <p class="card-text">タスク締め切り日</p>
-        <button class="btn btn-secondary">スタート</button>
+        <button class="btn btn-secondary" @click="handleOpenPomodoroTimer">スタート</button>
         <router-link
           :to="{ name: 'TaskDetail'}"
         >
@@ -23,6 +23,11 @@ export default {
     number: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    handleOpenPomodoroTimer() {
+      this.$emit('handleOpenPomodoroTimer')
     }
   }
 }

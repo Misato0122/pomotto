@@ -1,0 +1,13 @@
+<template>
+  <div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">50%</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "BreakTimerBlock"
+}
+</script>

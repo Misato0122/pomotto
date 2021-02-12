@@ -25,7 +25,7 @@ const router = new VueRouter({
       path: '/task/show',
       component: TaskDetail,
       name: 'TaskDetail'
-    }
+    },
   ]
 })
 

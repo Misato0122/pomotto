@@ -1,7 +1,13 @@
 <template>
   <div>
-    <PomodoroTimerBlock></PomodoroTimerBlock>
-    <BreakTimerBlock></BreakTimerBlock>
+    <PomodoroTimerBlock
+    v-if="isVisiblePomodoroTimerBlock"
+    >
+    </PomodoroTimerBlock>
+    <BreakTimerBlock
+    v-if="isVisibleBreakTimerBlock"
+    >
+    </BreakTimerBlock>
     <button 
       class="btn btn-secondary"
       @click="handleOpenCreateTaskModal"
@@ -66,7 +72,9 @@ export default {
   data() {
     return {
       isVisibleTaskCreateModal: false,
-      isVisiblePomodoroTimerModal: false
+      isVisiblePomodoroTimerModal: false,
+      isVisiblePomodoroTimerBlock: false,
+      isVisibleBreakTimerBlock: false
     }
   },
   components: {

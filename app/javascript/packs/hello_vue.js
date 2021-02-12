@@ -9,8 +9,11 @@ import Vue from 'vue'
 import App from '../app.vue'
 import router from '../router/router.js'
 import 'bootstrap/dist/css/bootstrap.css'
+import axios from '../plugins/axios.js'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$axios = axios
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

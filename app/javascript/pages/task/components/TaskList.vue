@@ -7,10 +7,10 @@
       <slot name="header">
         タスク区分
       </slot>
-      <template v-for="number in numbers">
+      <template v-for="task in tasks">
       <TaskItem 
-      :key="number"
-      :number="number"
+      :key="task.id"
+      :task="task"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimer"
       />
       </template>
@@ -23,6 +23,10 @@ import TaskItem from './TaskItem.vue'
 export default {
   name: 'TaskList',
   props: {
+    tasks: {
+      type: Array,
+      require: true
+    },
     taskListId: {
       type: String,
       require: true
@@ -30,9 +34,6 @@ export default {
   },
   data() {
     return {
-      numbers: [
-        "1", "2", "3"
-      ]
     }
   },
   components: {

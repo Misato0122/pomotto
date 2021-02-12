@@ -14,10 +14,10 @@
               type="text"
               class="form-control"
             >
-            <label for="description">説明文</label>
+            <label for="content">説明文</label>
             <textarea
-              id="description"
-              v-model="task.description"
+              id="content"
+              v-model="task.content"
               class="form-control"
             />
             <label for="deadline">締め切り日</label>
@@ -66,6 +66,9 @@ export default {
   methods: {
     handleCloseModal() {
       this.$emit('close-modal')
+    },
+    createTask(task) {
+      this.$emit('create-task', task)
     }
   }
 }

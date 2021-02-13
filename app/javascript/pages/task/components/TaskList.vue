@@ -12,6 +12,7 @@
       :key="task.id"
       :task="task"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimer"
+      @changeTaskStatus="changeTaskStatus"
       />
       </template>
     </div>
@@ -40,8 +41,11 @@ export default {
     TaskItem
   },
   methods: {
-    handleOpenPomodoroTimer() {
-      this.$emit('handleOpenPomodoroTimer');
+    handleOpenPomodoroTimer(task) {
+      this.$emit('handleOpenPomodoroTimer', task);
+    },
+    changeTaskStatus(task) {
+      this.$emit('changeTaskStatus', task)
     }
   }
 }

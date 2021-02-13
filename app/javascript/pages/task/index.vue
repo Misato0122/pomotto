@@ -20,6 +20,7 @@
       task-list-id="todo-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       :tasks="todoTasks"
+      @changeTaskStatus="updateTask"
     >
       <template #header>
         <div class="h4">
@@ -32,6 +33,7 @@
       task-list-id="done-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       :tasks="doneTasks"
+      @changeTaskStatus="updateTask"
     >
       <template #header>
         <div class="h4">
@@ -39,6 +41,12 @@
         </div>
       </template>
     </TaskList>
+    <button
+      class="btn btn-danger"
+      @click="deleteCompleteTask(doneTasks)"
+    >
+      完了済みのタスクを削除
+    </button>
     <router-link
       :to="{ name: 'TopIndex' }"
       class="btn btn-primary mr-5"
@@ -60,6 +68,7 @@
       <PomodoroTimerModal
         v-if="isVisiblePomodoroTimerModal"
         @close-modal="handleClosePomodoroTimerModal"
+        :task="pomodoroTask"
       >
       </PomodoroTimerModal>
     <!-- タイマーモーダルここまで-->
@@ -76,6 +85,7 @@ export default {
   name: 'TaskIndex',
   data() {
     return {
+      pomodoroTask: {},
       tasks: [],
       isVisibleTaskCreateModal: false,
       isVisiblePomodoroTimerModal: false,
@@ -100,7 +110,7 @@ export default {
       return this.tasks.filter(function(task){
         return task.status == "done"
       })
-    }
+    },
   },
   created() {
     this.fetchTasks();
@@ -112,8 +122,9 @@ export default {
     handleCloseCreateTaskModal() {
       this.isVisibleTaskCreateModal = false;
     },
-    handleOpenPomodoroTimerModal() {
+    handleOpenPomodoroTimerModal(task) {
       this.isVisiblePomodoroTimerModal = true;
+      this.pomodoroTask = task
     },
     handleClosePomodoroTimerModal() {
       this.isVisiblePomodoroTimerModal = false
@@ -128,6 +139,21 @@ export default {
       .then(res => this.tasks.push(res.data))
       .catch(err => console.log(err.status));
       this.handleCloseCreateTaskModal();
+    },
+    updateTask(task) {
+      this.$axios.patch(`tasks/${task.id}`, task)
+      .then(res => console.log(task))
+      .catch(err => console.log(err.status));
+    },
+    deleteCompleteTask(tasks) {
+      tasks.map(task => this.$axios.delete(`tasks/${task.id}`, task))
+      .then(res => console.log(res))
+      .catch(err => console.log(err.status))
+    },
+    deleteTask(deleteTask) {
+      this.tasks.filter(task => {
+        return task.id != deleteTask.id
+      })
     }
   }
 }

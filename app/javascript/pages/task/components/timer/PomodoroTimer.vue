@@ -4,7 +4,7 @@
        <div class="modal-dialog">
          <div class="modal-content">
            <div class="modal-header">
-             <h4 class="modal-title">タイトルタイトル</h4>
+             <h4 class="modal-title">{{ task.title }}</h4>
              <button type="button" class="close" v-on:click="handleCloseModal">×</button>
            </div>
            <div class="modal-body">
@@ -17,7 +17,6 @@
               <span id="seconds">{{ seconds }}</span>
             </div>
             <div id="buttons">
-              <button @click="startTimer" v-if="startButton">start</button>
               <button v-if="completeButton">complete!</button>
             </div>
            </div>
@@ -34,12 +33,21 @@
 <script>
 export default {
   name: 'PomodoroTimer',
+  props: {
+    task: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       totalTime: 1 * 5,
       startButton: true,
       completeButton: false,
     }
+  },
+  created() {
+    this.startTimer();
   },
   methods: {
     startTimer() {

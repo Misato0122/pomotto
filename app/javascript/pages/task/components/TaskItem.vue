@@ -3,11 +3,11 @@
     <div class="card my-3 p-10">
       <div class="card-body">
         <span>
-        <input type="checkbox" v-model="task.status" true-value="done" false-value="todo" @change="changeTaskStatus">
+        <input type="checkbox" v-model="task.status" true-value="done" false-value="todo" @change="changeTaskStatus(task)">
         {{ task.status }}
         <h5 class="card-title">{{ task.title }}</h5>
         <p class="card-text">{{ task.deadline }}
-          <button class="btn btn-secondary" @click="handleOpenPomodoroTimer">スタート</button>
+          <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenPomodoroTimer(task)">スタート</button>
           <router-link
             :to="{ name: 'TaskDetail'}"
           >
@@ -30,11 +30,11 @@ export default {
     }
   },
   methods: {
-    handleOpenPomodoroTimer() {
-      this.$emit('handleOpenPomodoroTimer')
+    handleOpenPomodoroTimer(task) {
+      this.$emit('handleOpenPomodoroTimer', this.task)
     },
-    changeTaskStatus() {
-      // タスクを更新するAPIを叩く処理
+    changeTaskStatus(task) {
+      this.$emit('changeTaskStatus', this.task)
     }
   }
 }

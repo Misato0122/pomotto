@@ -10,9 +10,11 @@ import App from '../app.vue'
 import router from '../router/router.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import BootstrapVue from 'bootstrap-vue'
 import axios from '../plugins/axios.js'
 import store from '../store/index.js'
 
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios

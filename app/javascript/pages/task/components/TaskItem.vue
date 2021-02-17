@@ -8,10 +8,11 @@
         <h5 class="card-title">{{ task.title }}</h5>
         <p class="card-text">{{ task.deadline }}
           <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenPomodoroTimer(task)">スタート</button>
-          <button class="btn btn-secondary" @click="handleOpenEditTaskModal(task)">編集</button>
+          <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenEditTaskModal(task)">編集</button>
           <button class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
           <router-link
             :to="{ name: 'TaskDetail'}"
+            v-if="task.status == 'todo'"
           >
             タスク詳細
           </router-link>

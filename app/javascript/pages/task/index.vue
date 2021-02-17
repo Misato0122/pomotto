@@ -187,11 +187,6 @@ export default {
         console.log(err)
       }
     },
-    // deleteCompleteTask(tasks) {
-    //   tasks.map(task => this.$axios.delete(`tasks/${task.id}`, task))
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err.status))
-    // },
   }
 }
 </script>

@@ -15,6 +15,7 @@
       @handleOpenTaskEditModal="handleOpenTaskEditModal"
       @deleteTask="deleteTask"
       @changeTaskStatus="changeTaskStatus"
+      @handleOpenDetailTask="handleOpenDetailTask"
       />
       </template>
     </div>
@@ -48,6 +49,9 @@ export default {
     },
     handleOpenTaskEditModal(task) {
       this.$emit('handleOpenTaskEditModal', task)
+    },
+    handleOpenDetailTask(task) {
+      this.$emit('handleOpenDetailTask', task)
     },
     deleteTask(task) {
       this.$emit('deleteTask', task)

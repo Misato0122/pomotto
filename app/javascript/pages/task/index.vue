@@ -20,6 +20,7 @@
       task-list-id="todo-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       @handleOpenTaskEditModal="handleOpenEditTaskModal"
+      @handleOpenDetailTask="handleOpenDetailTask"
       :tasks="todoTasks"
       @changeTaskStatus="updateTask"
       @deleteTask="handleDeleteTask"
@@ -67,6 +68,17 @@
     </transition>
     <!-- タスク作成モーダルここまで -->
 
+    <!-- タスク詳細モーダル -->
+    <transition name="fade">
+      <TaskDetailModal
+        v-if="isVisibleTaskDetailModal"
+        :task="detailTask"
+        @close-modal="handleCloseDetailTaskModal"
+      >
+      </TaskDetailModal>
+    </transition>
+    <!-- タスク詳細モーダルここまで-->
+
     <!-- タスク編集モーダル-->
     <transition name="fade">
       <TaskEditModal
@@ -95,6 +107,7 @@ import { mapGetters, mapActions } from 'vuex';
 import TaskList from './components/TaskList.vue';
 import TaskCreateModal from './components/TaskCreateModal.vue';
 import TaskEditModal from './components/TaskEditModal.vue';
+import TaskDetailModal from './components/TaskDetailModal.vue';
 import PomodoroTimerModal from './components/timer/PomodoroTimer.vue';
 import PomodoroTimerBlock from './components/timer/PomodoroTimerBlock.vue';
 import BreakTimerBlock from './components/timer/BreakTimer.vue';
@@ -103,8 +116,10 @@ export default {
   data() {
     return {
       pomodoroTask: {},
+      detailTask: {},
       editTask: {},
       isVisibleTaskCreateModal: false,
+      isVisibleTaskDetailModal: false,
       isVisibleTaskEditModal: false,
       isVisiblePomodoroTimerModal: false,
       isVisiblePomodoroTimerBlock: false,
@@ -114,6 +129,7 @@ export default {
   components: {
     TaskList,
     TaskCreateModal,
+    TaskDetailModal,
     TaskEditModal,
     PomodoroTimerModal,
     PomodoroTimerBlock,
@@ -142,6 +158,13 @@ export default {
     },
     handleCloseCreateTaskModal() {
       this.isVisibleTaskCreateModal = false;
+    },
+    handleOpenDetailTask(task) {
+      this.isVisibleTaskDetailModal = true;
+      this.detailTask = task
+    },
+    handleCloseDetailTaskModal() {
+      this.isVisibleTaskDetailModal = false;
     },
     handleOpenEditTaskModal(task) {
       this.isVisibleTaskEditModal = true;

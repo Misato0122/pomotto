@@ -1,5 +1,5 @@
 <template>
-  <div id="task-create-modal">
+  <div id="task-edit-modal">
     <div
       class="modal"
       @click.self="handleCloseModal"

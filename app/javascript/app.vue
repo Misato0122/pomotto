@@ -4,13 +4,16 @@
     <div class="container">
       <router-view />
     </div>
+
     <TheFooter />
   </div>
 </template>
 
 <script>
+
 import TheHeader from './components/TheHeader';
 import TheFooter from './components/TheFooter';
+
 export default {
   components: {
     TheHeader,

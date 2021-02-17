@@ -210,6 +210,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   dotenv-rails
+
   foreman
   jbuilder (~> 2.7)
   listen (~> 3.2)

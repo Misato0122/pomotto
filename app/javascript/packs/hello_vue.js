@@ -19,6 +19,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
 
+
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,

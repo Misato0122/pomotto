@@ -19,8 +19,10 @@
     <TaskList
       task-list-id="todo-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
+      @handleOpenTaskEditModal="handleOpenEditTaskModal"
       :tasks="todoTasks"
       @changeTaskStatus="updateTask"
+      @deleteTask="handleDeleteTask"
     >
       <template #header>
         <div class="h4">
@@ -34,6 +36,7 @@
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       :tasks="doneTasks"
       @changeTaskStatus="updateTask"
+      @deleteTask="handleDeleteTask"
     >
       <template #header>
         <div class="h4">
@@ -58,11 +61,23 @@
     <transition name="fade">
       <TaskCreateModal
         v-if="isVisibleTaskCreateModal"
-        @create-task="createTask"
+        @create-task="handleAddCreateTask"
         @close-modal="handleCloseCreateTaskModal"
       ></TaskCreateModal>
     </transition>
     <!-- タスク作成モーダルここまで -->
+
+    <!-- タスク編集モーダル-->
+    <transition name="fade">
+      <TaskEditModal
+        v-if="isVisibleTaskEditModal"
+        :task="editTask"
+        @update-task="handleUpdateTask"
+        @close-modal="handleCloseEditTaskModal"
+      >
+      </TaskEditModal>
+    </transition>
+    <!-- タスク編集モーダルここまで -->
 
     <!-- タイマーモーダル -->
       <PomodoroTimerModal
@@ -76,8 +91,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import TaskList from './components/TaskList.vue';
 import TaskCreateModal from './components/TaskCreateModal.vue';
+import TaskEditModal from './components/TaskEditModal.vue';
 import PomodoroTimerModal from './components/timer/PomodoroTimer.vue';
 import PomodoroTimerBlock from './components/timer/PomodoroTimerBlock.vue';
 import BreakTimerBlock from './components/timer/BreakTimer.vue';
@@ -86,8 +103,9 @@ export default {
   data() {
     return {
       pomodoroTask: {},
-      tasks: [],
+      editTask: {},
       isVisibleTaskCreateModal: false,
+      isVisibleTaskEditModal: false,
       isVisiblePomodoroTimerModal: false,
       isVisiblePomodoroTimerBlock: false,
       isVisibleBreakTimerBlock: false
@@ -96,11 +114,13 @@ export default {
   components: {
     TaskList,
     TaskCreateModal,
+    TaskEditModal,
     PomodoroTimerModal,
     PomodoroTimerBlock,
     BreakTimerBlock
   },
   computed: {
+    ...mapGetters("tasks", ["tasks"]),
     todoTasks: function() {
       return this.tasks.filter(function(task){
         return task.status == "todo"
@@ -116,11 +136,19 @@ export default {
     this.fetchTasks();
   },
   methods: {
+    ...mapActions("tasks", ["fetchTasks", "createTask", "updateTask", "deleteTask"]),
     handleOpenCreateTaskModal() {
       this.isVisibleTaskCreateModal = true;
     },
     handleCloseCreateTaskModal() {
       this.isVisibleTaskCreateModal = false;
+    },
+    handleOpenEditTaskModal(task) {
+      this.isVisibleTaskEditModal = true;
+      this.editTask = Object.assign({}, task)
+    },
+    handleCloseEditTaskModal() {
+      this.isVisibleTaskEditModal = false;
     },
     handleOpenPomodoroTimerModal(task) {
       this.isVisiblePomodoroTimerModal = true;
@@ -129,32 +157,41 @@ export default {
     handleClosePomodoroTimerModal() {
       this.isVisiblePomodoroTimerModal = false
     },
-    fetchTasks() {
-      this.$axios.get("tasks")
-      .then(res => this.tasks = res.data)
-      .catch(err => console.log(err.status));
+    async handleAddCreateTask(task) {
+      try{
+        await this.createTask(task)
+        this.handleCloseCreateTaskModal();
+      } catch(err) {
+        console.log(err)
+      }
     },
-    createTask(task) {
-      this.$axios.post("tasks", task)
-      .then(res => this.tasks.push(res.data))
-      .catch(err => console.log(err.status));
-      this.handleCloseCreateTaskModal();
+    async handleUpdateTask(task) {
+      try{
+        await this.updateTask(task)
+        this.handleCloseEditTaskModal();
+      } catch(err) {
+        console.log(err)
+      }
     },
-    updateTask(task) {
-      this.$axios.patch(`tasks/${task.id}`, task)
-      .then(res => console.log(task))
-      .catch(err => console.log(err.status));
+    async handleDeleteTask(task) {
+      try{
+        await this.deleteTask(task)
+      } catch(err) {
+        console.log(err)
+      }
     },
-    deleteCompleteTask(tasks) {
-      tasks.map(task => this.$axios.delete(`tasks/${task.id}`, task))
-      .then(res => console.log(res))
-      .catch(err => console.log(err.status))
+    async deleteCompleteTask(tasks) {
+      try{
+        await tasks.map(task => this.deleteTask(task))
+      } catch(err) {
+        console.log(err)
+      }
     },
-    deleteTask(deleteTask) {
-      this.tasks.filter(task => {
-        return task.id != deleteTask.id
-      })
-    }
+    // deleteCompleteTask(tasks) {
+    //   tasks.map(task => this.$axios.delete(`tasks/${task.id}`, task))
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err.status))
+    // },
   }
 }
 </script>

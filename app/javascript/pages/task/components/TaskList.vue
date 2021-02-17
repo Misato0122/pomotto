@@ -12,6 +12,8 @@
       :key="task.id"
       :task="task"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimer"
+      @handleOpenTaskEditModal="handleOpenTaskEditModal"
+      @deleteTask="deleteTask"
       @changeTaskStatus="changeTaskStatus"
       />
       </template>
@@ -43,6 +45,12 @@ export default {
   methods: {
     handleOpenPomodoroTimer(task) {
       this.$emit('handleOpenPomodoroTimer', task);
+    },
+    handleOpenTaskEditModal(task) {
+      this.$emit('handleOpenTaskEditModal', task)
+    },
+    deleteTask(task) {
+      this.$emit('deleteTask', task)
     },
     changeTaskStatus(task) {
       this.$emit('changeTaskStatus', task)

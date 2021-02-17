@@ -20,6 +20,11 @@ export default {
         return task.id == updateTask.id
       })
       state.tasks.splice(index, 1, updateTask)
+    },
+    deleteTask: (state, deleteTask) => {
+      state.tasks = state.tasks.filter(task => {
+        return task.id != deleteTask.id
+      })
     }
   },
   actions: {
@@ -33,7 +38,7 @@ export default {
     createTask({ commit }, task) {
       axios.post("tasks", task)
       .then(res => {
-        commit("addTask", res.data)
+        commit("addTasks", res.data)
       })
       .catch(err => console.log(err.response));
     },
@@ -50,7 +55,6 @@ export default {
         commit('deleteTask', res.data)
       })
       .catch(err => console.log(err.response));
-
     },
   }
 }

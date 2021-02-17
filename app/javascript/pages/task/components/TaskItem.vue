@@ -8,6 +8,8 @@
         <h5 class="card-title">{{ task.title }}</h5>
         <p class="card-text">{{ task.deadline }}
           <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenPomodoroTimer(task)">スタート</button>
+          <button class="btn btn-secondary" @click="handleOpenEditTaskModal(task)">編集</button>
+          <button class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
           <router-link
             :to="{ name: 'TaskDetail'}"
           >
@@ -35,6 +37,12 @@ export default {
     },
     changeTaskStatus(task) {
       this.$emit('changeTaskStatus', this.task)
+    },
+    handleDeleteTask(task) {
+      this.$emit('deleteTask', this.task)
+    },
+    handleOpenEditTaskModal(task) {
+      this.$emit('handleOpenTaskEditModal', this.task)
     }
   }
 }

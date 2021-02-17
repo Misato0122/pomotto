@@ -7,27 +7,38 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <label for="title">タイトル</label>
-            <input
+            <b-form-group
               id="title"
-              v-model="task.title"
-              type="text"
-              class="form-control"
+              label="タイトル"
+              label-for="title"
+              valid-feedback="OK!"
+              :invalid-feedback="invalidTitleFeedback"
+              :state="titleState"
             >
-            <label for="content">説明文</label>
-            <textarea
+              <b-form-input id="title" v-model="task.title" trim></b-form-input>
+            </b-form-group>
+            <b-form-group
               id="content"
-              v-model="task.content"
-              class="form-control"
-            />
-            <label for="deadline">締め切り日</label>
-            <b-form-datepicker 
-              type="date"
-              id="deadline"
-              v-model="task.deadline"
-              class="mb-2"
+              label="詳細"
+              label-for="content"
+              description="こちらは入力しなくても大丈夫です"
             >
-            </b-form-datepicker>
+              <b-form-textarea id="content" v-model="task.content"></b-form-textarea>
+            </b-form-group>
+            <b-form-group
+              id="deadline"
+              label="締め切り日"
+              label-for="deadline"
+              :invalid-feedback="invalidDeadlineFeedback"
+              :state="deadlineState"
+            >
+              <b-form-datepicker 
+                type="date"
+                id="deadline"
+                v-model="task.deadline"
+                class="mb-2"
+              />
+            </b-form-group>
           </div>
           <div class="modal-footer">
             <button
@@ -62,6 +73,20 @@ export default {
         status: "todo",
         deadline: ""
       }
+    }
+  },
+  computed: {
+    titleState() {
+      return this.task.title.length >= 1
+    },
+    deadlineState() {
+      return this.task.deadline != null
+    },
+    invalidTitleFeedback() {
+      return 'タスクを入力してください'
+    },
+    invalidDeadlineFeedback() {
+      return '必ず締め切り日を入れてください'
     }
   },
   methods: {

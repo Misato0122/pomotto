@@ -1,10 +1,11 @@
 <template>
   <div>
-    <p>トップページだよ</p>
-    <router-link 
-    :to="{ name: 'TaskIndex' }"
-    class="btn btn-dark mt-5"
-    >はじめる
+    <p>トップページ</p>
+    <router-link
+      :to="{ name: 'TaskIndex' }"
+      class="btn btn-primary mr-5"
+    >
+    はじめる
     </router-link>
   </div>
 </template>

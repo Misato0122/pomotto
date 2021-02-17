@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import TopIndex from "../pages/top/index.vue";
 import TaskIndex from "../pages/task/index.vue";
 
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -12,13 +13,13 @@ const router = new VueRouter({
     {
       path: '/',
       component: TopIndex,
-      name: 'TopIndex'
+      name: "TopIndex"
     },
     {
-      path: '/tasks',
-      component: TaskIndex,
-      name: 'TaskIndex'
-    }
+    path: '/tasks',
+    component: TaskIndex,
+    name: "TaskIndex"
+    },
   ]
 })
 

@@ -21,12 +21,13 @@
               class="form-control"
             />
             <label for="deadline">締め切り日</label>
-            <input 
+            <b-form-datepicker 
               type="date"
               id="deadline"
               v-model="task.deadline"
-              class="form-control"
+              class="mb-2"
             >
+            </b-form-datepicker>
           </div>
           <div class="modal-footer">
             <button

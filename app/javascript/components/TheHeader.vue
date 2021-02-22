@@ -31,7 +31,7 @@
               <em>User</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item @click="userLogout(user)">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -41,6 +41,14 @@
 
 <script>
 export default {
-  name: 'TheHeader'
+  name: 'TheHeader',
+  methods: {
+    userLogout(user) {
+      this.$axios.delete(`sessions/${user.id}`, {user: user})
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
+      this.$router.push('/login')
+    }
+  }
 }
 </script>

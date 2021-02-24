@@ -17,6 +17,8 @@ import store from '../store/index.js'
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
+// application.erbのcsrf_meta_tagsから生成されたtokenをリクエストヘッダーに代入している。
+axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 Vue.prototype.$axios = axios
 
 

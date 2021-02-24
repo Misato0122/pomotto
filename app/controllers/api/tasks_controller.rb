@@ -1,7 +1,7 @@
 class Api::TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.all
     render json: @tasks
   end
 
@@ -34,10 +34,10 @@ class Api::TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status)
+    params.require(:task).permit(:title, :content, :deadline, :status).merge(user_id: current_user.id)
   end
 end

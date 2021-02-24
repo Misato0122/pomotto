@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "RegisterPage",
   data() {
@@ -77,12 +78,7 @@ export default {
     }
   },
   methods: {
-    registerUser(user) {
-      this.$axios.post("users", {user: user})
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err.status))
-      this.$router.push('/login')
-    }
+    ...mapActions("users", ["registerUser"])
   }
 }
 </script>

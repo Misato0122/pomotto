@@ -29,7 +29,7 @@
       </b-form-group>
       <button
         class="btn btn-primary"
-        @click="userLogin(user)"
+        @click="loginUser(user)"
       >
       ログイン
       </button>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "LoginPage",
   data(){
@@ -49,14 +50,7 @@ export default {
     }
   },
   methods: {
-    userLogin(user) {
-      this.$axios.post("/session", user)
-      .then(res => {
-        console.log(res.data),
-        this.$router.push("/tasks")
-      })
-      .catch(err => console.log(err.status))
-    }
+    ...mapActions("users", ["loginUser"])
   }
 }
 </script>

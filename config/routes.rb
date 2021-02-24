@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :tasks
-    resources :users
+    resources :users, only: :create
+    resource :profile, only: %i[show update]
     resource :session, only: %i[create destroy]
   end
 

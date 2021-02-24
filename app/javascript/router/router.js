@@ -4,7 +4,8 @@ import VueRouter from 'vue-router';
 import TopIndex from "../pages/top/index.vue";
 import TaskIndex from "../pages/task/index.vue";
 import RegisterPage from '../pages/user/registerPage.vue';
-import LoginPage from '../pages/user/loginPage.vue'
+import LoginPage from '../pages/user/loginPage.vue';
+import ProfilePage from '../pages/user/ProfilePage.vue';
 
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const router = new VueRouter({
       path: '/login',
       component: LoginPage,
       name: "LoginPage"
+    },
+    {
+      path: '/profile',
+      component: ProfilePage,
+      name: "ProfilePage"
     }
   ]
 })

@@ -1,7 +1,12 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <router-link
+        :to="{ name: 'TopIndex' }"
+        tag="b-navbar-brand"
+      >
+        Pomotto
+      </router-link>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -30,8 +35,14 @@
             <template #button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item @click="userLogout">Sign Out</b-dropdown-item>
+            <router-link
+              :to="{ name: 'ProfilePage' }"
+              tag="b-dropdown-item"
+              
+            >
+              Profile
+            </router-link>
+            <b-dropdown-item @click="logoutUser">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -40,17 +51,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'TheHeader',
   methods: {
-    userLogout() {
-      this.$axios.delete(`/session`)
-      .then(res => {
-        console.log(res.data),
-        this.$router.push('/login')
-      })
-      .catch(err => console.log(err))
-    }
+    ...mapActions("users", ["logoutUser"])
   }
 }
 </script>

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :tasks
     resources :users
-    resources :sessions, only: %i[create destroy]
+    resource :session, only: %i[create destroy]
   end
 
   get '*path', to: 'home#index'

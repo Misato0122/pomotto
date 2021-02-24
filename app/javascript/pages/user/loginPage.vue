@@ -50,10 +50,12 @@ export default {
   },
   methods: {
     userLogin(user) {
-      this.$axios.post("sessions", user)
-      .then(res => console.log(res.data))
+      this.$axios.post("/session", user)
+      .then(res => {
+        console.log(res.data),
+        this.$router.push("/tasks")
+      })
       .catch(err => console.log(err.status))
-      this.$router.push("/tasks")
     }
   }
 }

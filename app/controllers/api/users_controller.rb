@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  skip_before_action :authenticate
+  skip_before_action :require_login
   before_action :set_user, only: %i[update destroy]
   def show
     render json: @user
@@ -8,7 +8,6 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      set_access_token!(@user)
       render json: @user
     else
       render json: @user.errors, status: :bad_request

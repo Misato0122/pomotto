@@ -1,1 +1,1 @@
-import axios from '../../plugins/axios.js';
+import axios from '../../plugins/VueAxiosPlugin.js';

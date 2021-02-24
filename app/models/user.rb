@@ -8,12 +8,5 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  has_many :api_keys, dependent: :destroy
   has_many :tasks, dependent: :destroy
-
-  def activate_api_key!
-    return api_keys.active.first if api_keys.active.exists?
-
-    api_keys.create
-  end
 end

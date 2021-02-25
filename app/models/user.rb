@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :name, presence: true
 
   has_many :tasks, dependent: :destroy
+  has_many :pomodoros, dependent: :destroy
 end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :users, only: :create
     resource :profile, only: %i[show update]
     resource :session, only: %i[create destroy]
+    resource :pomodoro, only: :create
   end
 
   get '*path', to: 'home#index'

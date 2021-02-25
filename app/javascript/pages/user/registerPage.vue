@@ -55,7 +55,7 @@
         </b-form-group>
         <button
           class="btn btn-secondary"
-          @click="registerUser(user)"
+          @click="handleAddRegisterUser(user)"
         >
         登録
         </button>
@@ -78,7 +78,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions("users", ["registerUser"])
+    registerUser(user) {
+      console.log(user)
+      this.$axios.post('/users', {user: user})
+      .then(res => {
+        console.log(res.data),
+        this.$router.push('/login')
+      })
+      .catch(err => console.log(err.status))
+    },
+    async handleAddRegisterUser(user) {
+      try{
+        await this.registerUser(user)
+      } catch(err) {
+        console.log(err)
+      }
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 class Api::TasksController < ApplicationController
-  before_action :set_task, only: [:show, :update, :destroy]
+  before_action :set_task, only: [:show, :update, :destroy, :pomodoro_count]
   def index
     @tasks = current_user.tasks.all
     render json: @tasks
@@ -32,14 +32,14 @@ class Api::TasksController < ApplicationController
   end
 
   def pomodoro_count
-    pomodoros = []
+    fetch_pomodoro = []
     d = Time.zone.today
     pomodoro = @task.pomodoros.group("date(created_at)").count
     (0..6).each do |a|
-      pomodoros.push({day: d - a, count: pomodoro[d - a]})
+      fetch_pomodoro.push({day: d - a, count: pomodoro[d - a]})
     end
 
-    render json: pomodoros
+    render json: fetch_pomodoro
   end
 
   private

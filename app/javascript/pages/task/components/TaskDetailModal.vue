@@ -16,8 +16,11 @@
             {{ task.deadline}}
             <br>
             <TaskChart
-
+              v-if="loaded"
+              :labels="labels"
+              :datasets="datasets"
             />
+            <br>
             <button
               type="button"
               class="btn btn-secondary"
@@ -37,6 +40,11 @@
 import TaskChart from './TaskChart.vue'
 export default {
   name: "TaskDetailModal",
+  data() {
+    return {
+    loaded: false
+    }
+  },
   props: {
     task: {
       type: Object,
@@ -47,7 +55,7 @@ export default {
     TaskChart
   },
   mounted() {
-    this.$axios.get('/pomodoro/pomodoro_count')
+    this.$axios.get(`/tasks/${this.task.id}/pomodoro_count`)
     .then(res => {
       this.labels = res.data.map(pomodoros => pomodoros.day)
       this.datasets = res.data.map(pomodoros => pomodoros.count)

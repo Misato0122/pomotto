@@ -95,6 +95,7 @@
       <PomodoroTimerModal
         v-if="isVisiblePomodoroTimerModal"
         @close-modal="handleClosePomodoroTimerModal"
+        @createPomodoro="handleCreatePomodoro"
         :task="pomodoroTask"
       >
       </PomodoroTimerModal>
@@ -210,6 +211,14 @@ export default {
         console.log(err)
       }
     },
+    handleCreatePomodoro(task) {
+      this.$axios.post('/pomodoro', {task_id: task.id})
+      .then(res => {
+        console.log(res.data),
+        this.handleClosePomodoroTimerModal();
+      })
+      .catch(err => console.log(err.status))
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="task-detail-modal">
+  <div id="user-edit-modal">
     <div
       class="modal"
       @click.self="handleCloseModal"
@@ -7,17 +7,27 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            {{ task.status }}
-            <br>
-            {{ task.title}}
-            <br>
-            {{ task.content}}
-            <br>
-            {{ task.deadline}}
-            <br>
-            <TaskChart
-
+            <label for="name">名前</label>
+            <input
+              id="name"
+              v-model="user.name"
+              type="text"
+              class="form-control"
+            >
+            <label for="email">メールアドレス</label>
+            <textarea
+              id="email"
+              v-model="user.email"
+              class="form-control"
             />
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-success"
+              @click="updateUser(user)"
+            >
+              更新
+            </button>
             <button
               type="button"
               class="btn btn-secondary"
@@ -34,31 +44,21 @@
 </template>
 
 <script>
-import TaskChart from './TaskChart.vue'
 export default {
-  name: "TaskDetailModal",
+  name: "TaskCreateModal",
   props: {
-    task: {
+    user: {
       type: Object,
       required: true
     }
-  },
-  components: {
-    TaskChart
-  },
-  mounted() {
-    this.$axios.get('/pomodoro/pomodoro_count')
-    .then(res => {
-      this.labels = res.data.map(pomodoros => pomodoros.day)
-      this.datasets = res.data.map(pomodoros => pomodoros.count)
-      this.loaded = true
-    })
-    .catch(err => console.log(err.response))
   },
   methods: {
     handleCloseModal() {
       this.$emit('close-modal')
     },
+    updateUser(user) {
+      this.$emit('update-user', user)
+    }
   }
 }
 </script>

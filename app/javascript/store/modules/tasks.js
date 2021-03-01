@@ -42,7 +42,7 @@ export default {
       })
       .catch(err => console.log(err.response));
     },
-    updateTask({ commit}, task) {
+    updateTask({ commit }, task) {
       axios.patch(`tasks/${task.id}`, task)
       .then(res => {
         commit('updateTask', res.data)

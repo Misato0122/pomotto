@@ -17,7 +17,12 @@
               <span id="seconds">{{ seconds }}</span>
             </div>
             <div id="buttons">
-              <button v-if="completeButton">complete!</button>
+              <button 
+                v-if="completeButton"
+                @click="handleCreatePomodoro(task)"
+              >
+              complete!
+              </button>
             </div>
            </div>
            <div class="modal-footer">
@@ -71,6 +76,9 @@ export default {
     },
     handleCloseModal() {
       this.$emit('close-modal');
+    },
+    handleCreatePomodoro(task) {
+      this.$emit('createPomodoro', task)
     }
   },
   computed: {

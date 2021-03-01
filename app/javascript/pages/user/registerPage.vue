@@ -55,7 +55,7 @@
         </b-form-group>
         <button
           class="btn btn-secondary"
-          @click="registerUser(user)"
+          @click="handleAddRegisterUser(user)"
         >
         登録
         </button>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "RegisterPage",
   data() {
@@ -78,10 +79,20 @@ export default {
   },
   methods: {
     registerUser(user) {
-      this.$axios.post("users", {user: user})
-      .then(res => console.log(res.data))
+      console.log(user)
+      this.$axios.post('/users', {user: user})
+      .then(res => {
+        console.log(res.data),
+        this.$router.push('/login')
+      })
       .catch(err => console.log(err.status))
-      this.$router.push('/login')
+    },
+    async handleAddRegisterUser(user) {
+      try{
+        await this.registerUser(user)
+      } catch(err) {
+        console.log(err)
+      }
     }
   }
 }

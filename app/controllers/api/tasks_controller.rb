@@ -31,6 +31,17 @@ class Api::TasksController < ApplicationController
     render json: @task
   end
 
+  def pomodoro_count
+    pomodoros = []
+    d = Time.zone.today
+    pomodoro = @task.pomodoros.group("date(created_at)").count
+    (0..6).each do |a|
+      pomodoros.push({day: d - a, count: pomodoro[d - a]})
+    end
+
+    render json: pomodoros
+  end
+
   private
 
   def set_task

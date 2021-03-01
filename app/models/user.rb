@@ -8,5 +8,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, dependent: :nullify
+  has_many :pomodoros, dependent: :destroy
 end

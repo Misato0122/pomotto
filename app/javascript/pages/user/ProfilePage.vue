@@ -3,7 +3,11 @@
     <h1>プロフィールページ</h1>
     <p>{{ user.name }}</p>
     <p>{{ user.email }}</p>
-    <UserChart />
+    <UserChart 
+      v-if="loaded"
+      :labels="labels"
+      :datasets="datasets"
+    />
     <button
       @click="handleOpenUserEditModal"
       class="btn btn-primary"
@@ -16,6 +20,7 @@
         :user="user"
         v-if="isVisibleUserEditModal"
         @close-modal="handleCloseUserEditModal"
+        @update-user="handleUpdateUser"
       >
       </UserEditModal>
     </transition>
@@ -26,12 +31,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import UserEditModal from './UserEditModal.vue';
-import UserChart from './UserChart.vue';
+import UserChart from './UserChart.vue'
 export default {
   name: 'ProfilePage',
   data() {
     return {
-      isVisibleUserEditModal: false
+      isVisibleUserEditModal: false,
+      loaded: false
     }
   },
   components: {
@@ -44,14 +50,32 @@ export default {
   created() {
     this.fetchUser()
   },
+  mounted() {
+    this.$axios.get('/pomodoro/pomodoro_count')
+    .then(res => {
+      this.labels = res.data.map(pomodoros => pomodoros.day)
+      this.datasets = res.data.map(pomodoros => pomodoros.count)
+      this.loaded = true
+    })
+    .catch(err => console.log(err.response))
+  },
   methods: {
-    ...mapActions("users", ["fetchUser"]),
+    ...mapActions("users", ["fetchUser", "updateUser"]),
     handleOpenUserEditModal() {
       this.isVisibleUserEditModal = true
       this.user = Object.assign({}, user)
     },
     handleCloseUserEditModal() {
       this.isVisibleUserEditModal = false
+    },
+    async handleUpdateUser(user) {
+      try{
+        console.log(user)
+        await this.updateUser(user)
+        this.handleCloseUserEditModal();
+      } catch(err) {
+        console.log(err)
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ export default {
   mutations: {
     setUser(state, user) {
       state.user = user
-    }
+    },
   },
   actions: {
     fetchUser({ commit }) {
@@ -40,6 +40,13 @@ export default {
         router.push('/login')
       })
       .catch(err => console.log(err))
+    },
+    updateUser({ commit }, user){
+      axios.patch('/profile', {user: user})
+      .then(res => {
+        commit('setUser', res.data)
+      })
+      .catch(err => console.log(err.response))
     }
   }
 }

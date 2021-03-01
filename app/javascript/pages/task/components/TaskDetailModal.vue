@@ -15,6 +15,9 @@
             <br>
             {{ task.deadline}}
             <br>
+            <TaskChart
+
+            />
             <button
               type="button"
               class="btn btn-secondary"
@@ -31,6 +34,7 @@
 </template>
 
 <script>
+import TaskChart from './TaskChart.vue'
 export default {
   name: "TaskDetailModal",
   props: {
@@ -38,6 +42,18 @@ export default {
       type: Object,
       required: true
     }
+  },
+  components: {
+    TaskChart
+  },
+  mounted() {
+    this.$axios.get('/pomodoro/pomodoro_count')
+    .then(res => {
+      this.labels = res.data.map(pomodoros => pomodoros.day)
+      this.datasets = res.data.map(pomodoros => pomodoros.count)
+      this.loaded = true
+    })
+    .catch(err => console.log(err.response))
   },
   methods: {
     handleCloseModal() {

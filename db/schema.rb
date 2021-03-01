@@ -12,16 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2021_02_25_063030) do
 
-  create_table "api_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "access_token", null: false
-    t.datetime "expires_at"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["access_token"], name: "index_api_keys_on_access_token", unique: true
-    t.index ["user_id"], name: "index_api_keys_on_user_id"
-  end
-
   create_table "pomodoros", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "task_id", null: false
@@ -38,7 +28,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_063030) do
     t.date "deadline", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -52,7 +42,6 @@ ActiveRecord::Schema.define(version: 2021_02_25_063030) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "api_keys", "users"
   add_foreign_key "pomodoros", "tasks"
   add_foreign_key "pomodoros", "users"
   add_foreign_key "tasks", "users"

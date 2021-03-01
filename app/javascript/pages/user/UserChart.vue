@@ -22,7 +22,7 @@ export default {
           xAxes: [{
             ticks: {
               beginAtZero: true,
-              stepSize: 1,
+              stepSize: 5,
               min: 0,
               max: 30
             },

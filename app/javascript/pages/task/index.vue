@@ -2,10 +2,13 @@
   <div>
     <PomodoroTimerBlock
     v-if="isVisiblePomodoroTimerBlock"
+    @openPomodoroTimerModal="handleOpenPomodoroTimerModal"
     >
     </PomodoroTimerBlock>
+
     <BreakTimerBlock
     v-if="isVisibleBreakTimerBlock"
+    @closeBreakTimer="closeBreakTimer"
     >
     </BreakTimerBlock>
 
@@ -24,6 +27,8 @@
       :tasks="todoTasks"
       @changeTaskStatus="updateTask"
       @deleteTask="handleDeleteTask"
+      @closePomodoroStartButton="handleCloseBreakTimerBlock"
+      ref="taskList"
     >
       <template #header>
         <div class="h4">
@@ -36,6 +41,7 @@
       task-list-id="done-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       :tasks="doneTasks"
+      @handleOpenDetailTask="handleOpenDetailTask"
       @changeTaskStatus="updateTask"
       @deleteTask="handleDeleteTask"
     >
@@ -112,6 +118,7 @@ import TaskDetailModal from './components/TaskDetailModal.vue';
 import PomodoroTimerModal from './components/timer/PomodoroTimer.vue';
 import PomodoroTimerBlock from './components/timer/PomodoroTimerBlock.vue';
 import BreakTimerBlock from './components/timer/BreakTimer.vue';
+
 export default {
   name: 'TaskIndex',
   data() {
@@ -151,6 +158,8 @@ export default {
   },
   created() {
     this.fetchTasks();
+    this.startPomodoroBlock();
+    this.startBreakTimer();
   },
   methods: {
     ...mapActions("tasks", ["fetchTasks", "createTask", "updateTask", "deleteTask"]),
@@ -177,9 +186,12 @@ export default {
     handleOpenPomodoroTimerModal(task) {
       this.isVisiblePomodoroTimerModal = true;
       this.pomodoroTask = task
+      this.handleCloseBreakTimerBlock();
     },
-    handleClosePomodoroTimerModal() {
-      this.isVisiblePomodoroTimerModal = false
+    handleClosePomodoroTimerModal(task) {
+      this.startPomodoroBlock();
+      this.isVisiblePomodoroTimerModal = false;
+      this.pomodoroTask = task
     },
     async handleAddCreateTask(task) {
       try{
@@ -216,10 +228,35 @@ export default {
       .then(res => {
         console.log(res.data),
         this.handleClosePomodoroTimerModal();
+        this.closePomodoroBlock();
+        this.isVisibleBreakTimerBlock = true
+        this.$refs.taskList.OpenStartPomodoroButton();
       })
       .catch(err => console.log(err.status))
+    },
+    startBreakTimer() {
+      if(localStorage.getItem('breakSeconds')){
+        this.isVisibleBreakTimerBlock = true
+      }
+    },
+    closeBreakTimer() {
+      this.isVisibleBreakTimerBlock = false
+    },
+    startPomodoroBlock() {
+      if(localStorage.getItem('totalSeconds')){
+        this.isVisiblePomodoroTimerBlock = true
+      }
+    },
+    closePomodoroBlock() {
+      this.isVisiblePomodoroTimerBlock = false
+    },
+    handleCloseBreakTimerBlock() {
+      if(localStorage.getItem('breakSeconds')){
+        this.isVisibleBreakTimerBlock = false
+        localStorage.removeItem('breakSeconds')
+      }
     }
-  }
+  },
 }
 </script>
 

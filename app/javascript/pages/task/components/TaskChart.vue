@@ -22,9 +22,9 @@ export default {
           xAxes: [{
             ticks: {
               beginAtZero: true,
-              stepSize: 2,
+              stepSize: 5,
               min: 0,
-              max: 20
+              max: 30
             },
           }],
         }
@@ -41,7 +41,7 @@ export default {
           backgroundColor: "#f25287",
           datalabels: {
             color: 'black',
-            anchor: 'end',
+            anchor: 'center',
             formatter: function(value, context) {
               if (value >= 1) {
               return '合計 ' + (value * 25) + '分'

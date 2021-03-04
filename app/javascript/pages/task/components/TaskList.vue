@@ -16,7 +16,16 @@
       @deleteTask="deleteTask"
       @changeTaskStatus="changeTaskStatus"
       @handleOpenDetailTask="handleOpenDetailTask"
-      />
+      >
+        <template #start-button>
+          <button 
+          class="btn btn-secondary" 
+          v-if="task.status == 'todo' && visiblePomodoroStartButton"
+          @click="handleOpenPomodoroTimer(task)"
+          >スタート
+          </button>
+        </template>
+      </TaskItem>
       </template>
     </div>
   </div>
@@ -38,14 +47,20 @@ export default {
   },
   data() {
     return {
+      visiblePomodoroStartButton: true
     }
   },
   components: {
     TaskItem
   },
+  created() {
+    this.CloseStartPomodoroButton();
+  },
   methods: {
     handleOpenPomodoroTimer(task) {
       this.$emit('handleOpenPomodoroTimer', task);
+      localStorage.setItem("pomodoroTask", JSON.stringify(task));
+      this.visiblePomodoroStartButton = false
     },
     handleOpenTaskEditModal(task) {
       this.$emit('handleOpenTaskEditModal', task)
@@ -58,6 +73,14 @@ export default {
     },
     changeTaskStatus(task) {
       this.$emit('changeTaskStatus', task)
+    },
+    CloseStartPomodoroButton() {
+      if(localStorage.getItem('totalSeconds')) {
+        this.visiblePomodoroStartButton = false
+      }
+    },
+    OpenStartPomodoroButton() {
+      this.visiblePomodoroStartButton = true
     }
   }
 }

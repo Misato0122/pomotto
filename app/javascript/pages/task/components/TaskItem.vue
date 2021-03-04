@@ -7,8 +7,9 @@
         {{ task.status }}
         <h5 class="card-title">{{ task.title }}</h5>
         <p class="card-text">{{ task.deadline }}
-          <button class="btn btn-primary" v-if="task.status == 'todo'" @click="handleOpenDetailTaskModal(task)">詳細</button>
-          <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenPomodoroTimer(task)">スタート</button>
+          <button class="btn btn-primary" @click="handleOpenDetailTaskModal(task)">詳細</button>
+          <slot name="start-button">
+          </slot>
           <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenEditTaskModal(task)">編集</button>
           <button class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
         </p>
@@ -21,6 +22,11 @@
 <script>
 export default {
   name: 'TaskItem',
+  data() {
+    return {
+      visiblePomodoroStartButton: true
+    }
+  },
   props: {
     task: {
       type: Object,
@@ -28,9 +34,6 @@ export default {
     }
   },
   methods: {
-    handleOpenPomodoroTimer(task) {
-      this.$emit('handleOpenPomodoroTimer', this.task)
-    },
     changeTaskStatus(task) {
       this.$emit('changeTaskStatus', this.task)
     },
@@ -42,7 +45,8 @@ export default {
     },
     handleOpenDetailTaskModal(task) {
       this.$emit('handleOpenDetailTask', this.task)
-    }
+    },
   }
 }
 </script>
+

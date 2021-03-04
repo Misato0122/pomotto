@@ -1,5 +1,16 @@
 <template>
   <div>
+    <BreakTimerBlock
+    v-if="isVisibleBreakTimerBlock"
+    @closeBreakTimer="closeBreakTimer"
+    >
+    </BreakTimerBlock>
+
+    <PomodoroTimerBlock
+    v-if="isVisiblePomodoroTimerBlock"
+    >
+    </PomodoroTimerBlock>
+
     <h1>プロフィールページ</h1>
     <p>{{ user.name }}</p>
     <p>{{ user.email }}</p>
@@ -31,24 +42,33 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import UserEditModal from './UserEditModal.vue';
-import UserChart from './UserChart.vue'
+import UserChart from './UserChart.vue';
+import BreakTimerBlock from '../task/components/timer/BreakTimer.vue';
+import PomodoroTimerBlock from '../task/components/timer/PomodoroTimerBlock.vue';
+
 export default {
   name: 'ProfilePage',
   data() {
     return {
       isVisibleUserEditModal: false,
+      isVisibleBreakTimerBlock: false,
+      isVisiblePomodoroTimerBlock: false,
       loaded: false
     }
   },
   components: {
     UserEditModal,
-    UserChart
+    UserChart,
+    BreakTimerBlock,
+    PomodoroTimerBlock
   },
   computed: {
     ...mapGetters("users", ["user"])
   },
   created() {
-    this.fetchUser()
+    this.fetchUser(),
+    this.startPomodoroBlock()
+    this.startBreakTimer()
   },
   mounted() {
     this.$axios.get('/pomodoro/pomodoro_count')
@@ -76,7 +96,27 @@ export default {
       } catch(err) {
         console.log(err)
       }
-    }
+    },
+    startBreakTimer() {
+      if(localStorage.getItem('breakSeconds')){
+        this.isVisibleBreakTimerBlock = true
+      }
+    },
+    closeBreakTimer() {
+      this.isVisibleBreakTimerBlock = false
+    },
+    startPomodoroBlock() {
+      if(localStorage.getItem('totalSeconds')){
+        this.isVisiblePomodoroTimerBlock = true
+      }
+    },
+    closePomodoroBlock() {
+      this.isVisiblePomodoroTimerBlock = false
+    },
+    handleOpenPomodoroTimerModal() {
+      this.isVisiblePomodoroTimerModal = true;
+      this.handleCloseBreakTimerBlock();
+    },
   }
 }
 </script>

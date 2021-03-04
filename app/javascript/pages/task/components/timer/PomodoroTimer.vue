@@ -1,11 +1,11 @@
 <template>
    <div>
-     <div class="modal" @click.self="handleCloseModal">
+     <div class="modal" @click.self="handleCloseModal(task)">
        <div class="modal-dialog">
          <div class="modal-content">
            <div class="modal-header">
              <h4 class="modal-title">{{ task.title }}</h4>
-             <button type="button" class="close" v-on:click="handleCloseModal">×</button>
+             <button type="button" class="close" v-on:click="handleCloseModal(task)">×</button>
            </div>
            <div class="modal-body">
              <div class="task-information">
@@ -46,21 +46,31 @@ export default {
   },
   data() {
     return {
-      totalTime: 1 * 5,
+      timer: null,
+      totalTime: 0,
       startButton: true,
       completeButton: false,
     }
   },
   created() {
     this.startTimer();
+    console.log(this.totalTime);
   },
   methods: {
+    fetchTime: function() {
+      if(localStorage.getItem('totalSeconds')) {
+        this.totalTime = parseInt(localStorage.getItem('totalSeconds'))
+      } else {
+        this.totalTime = 1 * 3
+      }
+    },
     startTimer() {
-      setInterval(() => this.countdown(), 1000);
+      this.fetchTime();
+      this.timer = setInterval(() => this.countdown(), 1000);
       this.startButton = false
     },
     resetTimer() {
-      clearInterval(() => this.countdown());
+      clearInterval(this.timer);
     },
     padTime(time) {
       return (time < 10 ? "0" : "") + time;
@@ -68,16 +78,19 @@ export default {
     countdown() {
       if(this.totalTime >= 1) {
         this.totalTime--;
+        localStorage.totalSeconds = this.totalTime
       } else {
         this.totalTime = 0;
         this.resetTimer();
         this.completeButton = true;
       }
     },
-    handleCloseModal() {
-      this.$emit('close-modal');
+    handleCloseModal(task) {
+      this.$emit('close-modal', this.task);
     },
     handleCreatePomodoro(task) {
+      localStorage.removeItem('totalSeconds'),
+      localStorage.removeItem('pomodoroTask'),
       this.$emit('createPomodoro', task)
     }
   },

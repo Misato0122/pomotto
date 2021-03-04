@@ -4,7 +4,6 @@
     <div class="container">
       <router-view />
     </div>
-
     <TheFooter />
   </div>
 </template>
@@ -17,7 +16,7 @@ import TheFooter from './components/TheFooter';
 export default {
   components: {
     TheHeader,
-    TheFooter
+    TheFooter,
   }
 }
 </script>

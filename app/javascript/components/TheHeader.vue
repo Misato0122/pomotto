@@ -30,20 +30,28 @@
             <b-dropdown-item href="#">FA</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              <em>User</em>
-            </template>
-            <router-link
-              :to="{ name: 'ProfilePage' }"
-              tag="b-dropdown-item"
-              
-            >
-              Profile
-            </router-link>
-            <b-dropdown-item @click="logoutUser">Sign Out</b-dropdown-item>
+          <template v-if="!user">
+            <b-nav-item right>
+              <router-link
+                :to="{ name: 'LoginPage' }"
+                tag="em"
+              >
+              Login
+              </router-link>
+            </b-nav-item>
+          </template>
+          <template v-else>
+          <b-nav-item-dropdown right text="User">
+              <router-link
+                :to="{ name: 'ProfilePage' }"
+                tag="b-dropdown-item"
+                
+              >
+                Profile
+              </router-link>
+              <b-dropdown-item @click="logoutUser">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+          </template>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -51,11 +59,17 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TheHeader',
+  computed: {
+    ...mapGetters("users", ["user"])
+  },
+  created() {
+    this.fetchUser();
+  },
   methods: {
-    ...mapActions("users", ["logoutUser"])
+    ...mapActions("users", ["fetchUser", "logoutUser"])
   }
 }
 </script>

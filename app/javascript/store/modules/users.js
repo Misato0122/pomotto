@@ -1,9 +1,6 @@
 import axios from '../../plugins/axios.js';
 import router from '../../router/router.js'
 
-// application.erbのcsrf_meta_tagsから生成されたtokenをリクエストヘッダーに代入している。
-axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
-
 
 export default {
   namespaced: true,
@@ -19,12 +16,23 @@ export default {
     },
   },
   actions: {
-    fetchUser({ commit }) {
-      axios.get('/profile')
-      .then(res => {
-        commit('setUser', res.data)
+    async fetchLoginUser({ commit, state }) {
+      if(state.user) return state.user
+
+      const userResponse = await axios.get('/profile')
+      .catch((err) => {
+        return null
       })
-      .catch(err => console.log(err.response));
+      if(!userResponse) return null
+
+      const loginUser = userResponse.data
+      if(loginUser) {
+        commit('setUser', loginUser)
+        return loginUser
+      } else {
+        commit('setUser', null)
+        return null
+      }
     },
     loginUser({ commit }, user) {
       axios.post("/session", user)
@@ -32,12 +40,12 @@ export default {
         commit('setUser', res.data),
         router.push("/tasks")
       })
-      .catch(err => console.log(err.status))
+      .catch(err => console.log(err.response.data))
     },
-    logoutUser() {
+    logoutUser({ commit }) {
       axios.delete(`/session`)
       .then(res => {
-        router.push('/login')
+        commit('setUser', null)
       })
       .catch(err => console.log(err))
     },

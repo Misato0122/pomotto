@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 import TopIndex from "../pages/top/index.vue";
 import TaskIndex from "../pages/task/index.vue";
@@ -21,7 +22,8 @@ const router = new VueRouter({
     {
     path: '/tasks',
     component: TaskIndex,
-    name: "TaskIndex"
+    name: "TaskIndex",
+    meta: { requiredAuthenticated: true}
     },
     {
       path: '/register',
@@ -36,9 +38,20 @@ const router = new VueRouter({
     {
       path: '/profile',
       component: ProfilePage,
-      name: "ProfilePage"
+      name: "ProfilePage",
+      meta: { requiredAuthenticated: true}
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('users/fetchLoginUser').then((user) => {
+    if(to.matched.some(record => record.meta.requiredAuthenticated) && !user) {
+      next({ name: 'LoginPage' });
+    } else {
+      next();
+    }
+  })
+});
 
 export default router

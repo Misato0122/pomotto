@@ -1,5 +1,8 @@
 <template>
   <div>
+  <p v-if="$route.query.redirect">
+    ログインしてください
+  </p>
   <b-card bg-variant="light">
     <h2>ログインページ</h2>
       <b-form-group

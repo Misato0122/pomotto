@@ -36,6 +36,13 @@
 </template>
 
 <script>
+import { Howl } from 'howler';
+
+
+const soundUrl = {
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Clock-Alarm05-1.mp3?alt=media&token=5a9927bd-48c7-4680-b74c-bf4df73d370b'
+}
+
 export default {
   name: 'PomodoroTimer',
   props: {
@@ -50,11 +57,15 @@ export default {
       totalTime: 0,
       startButton: true,
       completeButton: false,
+      audio: null
     }
   },
   created() {
     this.startTimer();
     console.log(this.totalTime);
+  },
+  mounted() {
+    this.audio = new Howl({ src: soundUrl.alert })
   },
   methods: {
     fetchTime: function() {
@@ -72,6 +83,18 @@ export default {
     resetTimer() {
       clearInterval(this.timer);
     },
+    startAlert() {
+      if(!localStorage.getItem('alert')) {
+        this.audio.play();
+        localStorage.alert = "1"
+      }
+    },
+    stopAlert() {
+      if(localStorage.getItem('alert')) {
+        this.audio.pause();
+        localStorage.removeItem('alert')
+      }
+    },
     padTime(time) {
       return (time < 10 ? "0" : "") + time;
     },
@@ -82,6 +105,7 @@ export default {
       } else {
         this.totalTime = 0;
         this.resetTimer();
+        this.startAlert();
         this.completeButton = true;
       }
     },
@@ -92,6 +116,7 @@ export default {
       localStorage.removeItem('totalSeconds'),
       localStorage.removeItem('pomodoroTask'),
       this.$emit('createPomodoro', task)
+      this.stopAlert();
     }
   },
   computed: {

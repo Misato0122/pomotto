@@ -111,6 +111,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { Howl } from 'howler';
 import TaskList from './components/TaskList.vue';
 import TaskCreateModal from './components/TaskCreateModal.vue';
 import TaskEditModal from './components/TaskEditModal.vue';
@@ -123,6 +124,7 @@ export default {
   name: 'TaskIndex',
   data() {
     return {
+      audio: null,
       pomodoroTask: {},
       detailTask: {},
       editTask: {},
@@ -141,7 +143,7 @@ export default {
     TaskEditModal,
     PomodoroTimerModal,
     PomodoroTimerBlock,
-    BreakTimerBlock
+    BreakTimerBlock,
   },
   computed: {
     ...mapGetters("tasks", ["tasks"]),

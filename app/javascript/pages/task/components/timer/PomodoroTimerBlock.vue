@@ -14,19 +14,29 @@
 </template>
 
 <script>
+import { Howl } from 'howler';
+
+const soundUrl = {
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Clock-Alarm05-1.mp3?alt=media&token=5a9927bd-48c7-4680-b74c-bf4df73d370b'
+}
+
 export default {
   name: "PomodoroTimerBlock",
     data() {
     return {
       task: {},
       totalTime: 0,
-      timer: null
+      timer: null,
+      audio: null
     }
   },
   created() {
     this.startTimer();
     this.task = JSON.parse(localStorage.getItem('pomodoroTask'))
     console.log(this.task)
+  },
+  mounted() {
+    this.audio = new Howl({ src: soundUrl.alert })
   },
   methods: {
     fetchTime: function() {
@@ -43,6 +53,12 @@ export default {
     resetTimer() {
       clearInterval(this.timer);
     },
+    startAlert() {
+      if(!localStorage.getItem('alert')) {
+        this.audio.play();
+        localStorage.alert = "1"
+      }
+    },
     padTime(time) {
       return (time < 10 ? "0" : "") + time;
     },
@@ -53,6 +69,7 @@ export default {
       } else {
         this.totalTime = 0;
         this.resetTimer();
+        this.startAlert();
       }
     },
     handleOpenPomodoroTimerModal(task) {

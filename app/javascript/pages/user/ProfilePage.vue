@@ -1,5 +1,6 @@
 <template>
   <div>
+    <audio src="#" />
     <h1>プロフィールページ</h1>
     <p>{{ user.name }}</p>
     <p>{{ user.email }}</p>

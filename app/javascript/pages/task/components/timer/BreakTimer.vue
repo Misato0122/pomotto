@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="timer">
+    <div class="timer d-flex align-items-center justify-content-center">
       <span>休憩時間   </span>
       <span id="minutes">{{ minutes }}</span>
       <span id:="middle">:</span>
@@ -10,6 +10,12 @@
 </template>
 
 <script>
+import { Howl } from 'howler';
+
+const soundUrl = {
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/News-Accent04-2.mp3?alt=media&token=dcf7a01e-829d-444e-a054-dc060c74f664'
+    }
+
 export default {
   name: "BreakTimerBlock",
     data() {
@@ -21,6 +27,10 @@ export default {
   created() {
     this.startTimer();
     console.log(this.totalTime);
+  },
+  mounted() {
+    this.audio = new Howl({ src: soundUrl.alert })
+    this.audio.volume = 1.0
   },
   methods: {
     fetchTime: function() {
@@ -52,6 +62,7 @@ export default {
         this.resetTimer();
         this.closeBreakTimer();
         localStorage.removeItem('breakSeconds')
+        this.audio.play();
       }
     },
   },
@@ -71,5 +82,7 @@ export default {
 <style scoped>
   .timer{
     background-color: pink;
+    border-radius: 10px;
+    width: 300px;
   }
 </style>

@@ -1,5 +1,6 @@
 import axios from '../../plugins/axios.js';
-import router from '../../router/router.js'
+import router from '../../router/router.js';
+import message from './message';
 
 
 export default {
@@ -38,6 +39,10 @@ export default {
       axios.post("/session", user)
       .then(res => {
         commit('setUser', res.data),
+        commit(`message/setContent`, {
+          content: 'ログインしました',
+          timeout: 6000
+        }),
         router.push("/tasks")
       })
       .catch(err => console.log(err.response.data))

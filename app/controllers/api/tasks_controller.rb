@@ -27,7 +27,7 @@ class Api::TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy!
+    @task.destroy
     render json: @task
   end
 

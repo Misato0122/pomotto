@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
+  enum role: { general: 0, guest: 1, admin: 2 }
+
   has_many :tasks, dependent: :nullify
-  has_many :pomodoros, dependent: :destroy
+  has_many :pomodoros, dependent: :nullify
 end

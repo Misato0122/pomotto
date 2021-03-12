@@ -10,11 +10,16 @@ import App from '../app.vue'
 import router from '../router/router.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import BootstrapVue from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import axios from '../plugins/axios.js'
 import store from '../store/index.js'
+import vuetify from '../plugins/vuetify.js'
+import '../plugins/veeValidate.js'
 
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
+
+
 Vue.config.productionTip = false
 
 // application.erbのcsrf_meta_tagsから生成されたtokenをリクエストヘッダーに代入している。
@@ -24,6 +29,7 @@ Vue.prototype.$axios = axios
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    vuetify,
     router,
     store,
     render: h => h(App)

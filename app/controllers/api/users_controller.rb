@@ -10,6 +10,12 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  # def guest_login
+  #   guest_user = User.find_by!(role: 'guest')
+  #   auto_login(guest_user)
+  #   render json: guest_user
+  # end
+
   private
 
   def user_params

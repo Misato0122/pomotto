@@ -1,14 +1,16 @@
 <template>
   <div>
-    <div class="timer">
-      <span>タスク実行中   </span>
+    <div class="timer d-flex align-items-center justify-content-center">
+      <span>タスク実行中</span>
       <span id="minutes">{{ minutes }}</span>
       <span id:="middle">:</span>
       <span id="seconds">{{ seconds }}</span>
-      <button
-        class="btn btn-secondary"
+      <v-btn
         @click="handleOpenPomodoroTimerModal(task)"
-      >タスク</button>
+        color="red"
+      >
+        実行中のタスク
+      </v-btn>
     </div>
   </div>
 </template>
@@ -17,8 +19,8 @@
 import { Howl } from 'howler';
 
 const soundUrl = {
-    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Clock-Alarm05-1.mp3?alt=media&token=5a9927bd-48c7-4680-b74c-bf4df73d370b'
-}
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Phrase03-1.mp3?alt=media&token=dbcaf4b4-1f40-4829-a4e5-9a16db304880'
+    }
 
 export default {
   name: "PomodoroTimerBlock",
@@ -37,6 +39,7 @@ export default {
   },
   mounted() {
     this.audio = new Howl({ src: soundUrl.alert })
+    this.audio.volume = 1.0
   },
   methods: {
     fetchTime: function() {
@@ -91,6 +94,8 @@ export default {
 
 <style scoped>
   .timer{
-    background-color: greenyellow;
+    background-color: #9ecca4;
+    border-radius: 10px;
+    width: 300px;
   }
 </style>

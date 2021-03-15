@@ -1,24 +1,44 @@
 <template>
   <div>
-    <audio src="#" />
-    <h1>プロフィールページ</h1>
-    <p>{{ user.name }}</p>
-    <p>{{ user.email }}</p>
+    <div class="my-5 main-content">
+    <v-card>
+      <div class="container row">
+        <div class="col-md-11 col-12">
+          <v-list-item theme--right>
+            <v-avatar
+              size="85"
+            >
+              <img src="https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/%E3%83%88%E3%83%9E%E3%83%88%E9%80%8F%E9%81%8E.png?alt=media&token=9b09bffd-a430-4933-8f43-b23a525e634d">
+            </v-avatar>
+            <p>{{ user.name }}</p>
+          </v-list-item>
+          <div class="v-card__text">
+            {{ user.description }}
+          </div>
+        </div>
+      <div class="col-md-1 col-9">
+        <v-btn
+          @click="handleOpenUserEditModal(user)"
+          color="primary"
+        >編集
+        </v-btn>
+      </div>
     <UserChart 
       v-if="loaded"
       :labels="labels"
       :datasets="datasets"
+      :options="options"
+      :height="height"
+      :width="width"
     />
-    <button
-      @click="handleOpenUserEditModal"
-      class="btn btn-primary"
-    >編集
-    </button>
+      </div>
+    </v-card>
+    </div>
 
     <!-- ユーザー編集モーダル -->
     <transition name="fade">
       <UserEditModal
-        :user="user"
+        :user="editUser"
         v-if="isVisibleUserEditModal"
         @close-modal="handleCloseUserEditModal"
         @update-user="handleUpdateUser"
@@ -38,8 +58,14 @@ export default {
   name: 'ProfilePage',
   data() {
     return {
+      editUser: {},
       isVisibleUserEditModal: false,
-      loaded: false
+      loaded: false,
+      options: {
+        responsive: false
+      },
+      height: 300,
+      width: 1100
     }
   },
   components: {
@@ -60,9 +86,10 @@ export default {
   },
   methods: {
     ...mapActions("users", ["updateUser"]),
-    handleOpenUserEditModal() {
+    handleOpenUserEditModal(user) {
+      console.log(user)
       this.isVisibleUserEditModal = true
-      this.user = Object.assign({}, user)
+      this.editUser = Object.assign({}, user)
     },
     handleCloseUserEditModal() {
       this.isVisibleUserEditModal = false
@@ -87,5 +114,7 @@ export default {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-
+  .v-card__text {
+    font-size: 20px;
+  }
 </style>

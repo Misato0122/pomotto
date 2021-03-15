@@ -66,6 +66,7 @@
           <div class="modal-footer">
             <v-btn
               @click="handleCloseModal"
+              color="secondary"
             >
               閉じる
             </v-btn>

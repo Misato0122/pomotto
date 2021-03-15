@@ -41,7 +41,7 @@ export default {
           backgroundColor: "#f25287",
           datalabels: {
             color: 'black',
-            anchor: 'center',
+            anchor: 'end',
             formatter: function(value, context) {
               if (value >= 1) {
               return '合計 ' + (value * 25) + '分'

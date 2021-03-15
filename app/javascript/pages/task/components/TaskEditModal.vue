@@ -12,7 +12,7 @@
               v-slot="{ invalid }"
             >
               <v-form @submit.prevent="submit">
-                                <validation-provider
+                <validation-provider
                     v-slot="{ errors }"
                     name="見出し"
                     rules="required"

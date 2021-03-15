@@ -5,7 +5,8 @@
          <div class="modal-content">
            <div class="modal-body">
              <div 
-              class="task-information d-flex align-items-center justify-content-center"
+              class="d-flex align-items-center justify-content-center"
+              style="font-size: 20px;"
              >
               <p>現在行っているタスク</p>
              </div>
@@ -30,6 +31,10 @@
                 Complete!
               </v-btn>
             </div>
+            <br>
+            <small>※モーダルを閉じるときは2秒程置いてください</small>
+            <br>
+            <small>※タイマーブロックが表示されなかった場合はリロードすると表示されます。</small>
            </div>
            <div class="modal-footer">
              <v-btn
@@ -155,7 +160,9 @@ export default {
   }
   .task-information{
     height: 40px;
-    font-size: 15px;
-    color: #810034;
+    font-size: 30px;
+  }
+  small {
+    color: red;
   }
 </style>

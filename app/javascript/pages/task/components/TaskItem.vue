@@ -2,7 +2,6 @@
   <div>
     <div class="card my-3 p-10">
       <div class="card-body text-align-center">
-          <span>
           <input 
           type="checkbox"
           v-model="task.status" 
@@ -10,11 +9,12 @@
           false-value="todo" 
           @change="changeTaskStatus(task)"
           >
-          </span>
           <span class="card-title text-center" style="font-size: 25px;">{{ task.title }}</span>
           <br>
           <span class="card-text text-center" style="font-size: 15px; color: #00917c;">締め切り日:  {{ task.deadline }}</span>
         <span class="float-right">
+          <slot name="start-button">
+          </slot>
           <v-btn
             @click="handleOpenDetailTaskModal(task)"
             fab
@@ -24,8 +24,6 @@
               mdi-dots-horizontal
             </v-icon>
           </v-btn>
-          <slot name="start-button">
-          </slot>
           <v-btn
             fab
             color="#b4aee8"
@@ -57,7 +55,7 @@ export default {
   name: 'TaskItem',
   data() {
     return {
-      visiblePomodoroStartButton: true
+      visiblePomodoroStartButton: true,
     }
   },
   props: {

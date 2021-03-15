@@ -18,15 +18,24 @@
       @handleOpenDetailTask="handleOpenDetailTask"
       >
         <template #start-button>
-          <button 
-          class="btn btn-secondary" 
-          v-if="task.status == 'todo' && visiblePomodoroStartButton"
-          @click="handleOpenPomodoroTimer(task)"
-          >スタート
-          </button>
+          <v-btn
+            @click="handleOpenPomodoroTimer(task)"
+            v-if="task.status == 'todo' && visiblePomodoroStartButton"
+            fab
+            color="#f25287"
+          >
+            <v-icon dark>
+              mdi-play
+            </v-icon>
+          </v-btn>
         </template>
       </TaskItem>
       </template>
+      <slot 
+        name="deleteDoneTasks"
+        v-if="tasks.length"
+      >
+      </slot>
     </div>
   </div>
 </template>

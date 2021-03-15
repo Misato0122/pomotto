@@ -1,23 +1,29 @@
 <template>
   <div>
     <PomodoroTimerBlock
+    class="d-flex align-items-center justify-content-center"
     v-if="isVisiblePomodoroTimerBlock"
     @openPomodoroTimerModal="handleOpenPomodoroTimerModal"
     >
     </PomodoroTimerBlock>
 
     <BreakTimerBlock
+    class="d-flex align-items-center justify-content-center"
     v-if="isVisibleBreakTimerBlock"
     @closeBreakTimer="closeBreakTimer"
     >
     </BreakTimerBlock>
 
-    <button 
-      class="btn btn-secondary"
+    <br><br>
+
+    <v-btn
+      block
+      rounded
+      color="success"
       @click="handleOpenCreateTaskModal"
     >
       タスク作成
-    </button>
+    </v-btn>
 
     <TaskList
       task-list-id="todo-list"
@@ -50,20 +56,16 @@
           完了タスク
         </div>
       </template>
+      <template #deleteDoneTasks>
+        <v-btn
+          @click="deleteCompleteTask(doneTasks)"
+          color="red"
+        >
+          完了済みのタスクを削除
+        </v-btn>
+      </template>
     </TaskList>
-    <button
-      class="btn btn-danger"
-      @click="deleteCompleteTask(doneTasks)"
-    >
-      完了済みのタスクを削除
-    </button>
-    <router-link
-      :to="{ name: 'TopIndex' }"
-      class="btn btn-primary mr-5"
-    >
-    戻る
-    </router-link>
-    
+
     <!-- タスク作成モーダル -->
     <transition name="fade">
       <TaskCreateModal
@@ -111,6 +113,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { Howl } from 'howler';
 import TaskList from './components/TaskList.vue';
 import TaskCreateModal from './components/TaskCreateModal.vue';
 import TaskEditModal from './components/TaskEditModal.vue';
@@ -123,6 +126,7 @@ export default {
   name: 'TaskIndex',
   data() {
     return {
+      audio: null,
       pomodoroTask: {},
       detailTask: {},
       editTask: {},
@@ -141,7 +145,7 @@ export default {
     TaskEditModal,
     PomodoroTimerModal,
     PomodoroTimerBlock,
-    BreakTimerBlock
+    BreakTimerBlock,
   },
   computed: {
     ...mapGetters("tasks", ["tasks"]),
@@ -211,6 +215,8 @@ export default {
     },
     async handleDeleteTask(task) {
       try{
+        console.log(task)
+        console.log(task.id)
         await this.deleteTask(task)
       } catch(err) {
         console.log(err)

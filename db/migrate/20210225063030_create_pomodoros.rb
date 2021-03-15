@@ -2,7 +2,7 @@ class CreatePomodoros < ActiveRecord::Migration[6.0]
   def change
     create_table :pomodoros do |t|
       t.references :user, null: false, foreign_key: true
-      t.references :task, null: false, foreign_key: true
+      t.references :task, foreign_key: true
 
       t.timestamps
     end

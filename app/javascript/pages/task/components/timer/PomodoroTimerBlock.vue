@@ -1,32 +1,45 @@
 <template>
   <div>
-    <div class="timer">
-      <span>タスク実行中   </span>
+    <div class="timer d-flex align-items-center justify-content-center">
+      <span>タスク実行中</span>
       <span id="minutes">{{ minutes }}</span>
       <span id:="middle">:</span>
       <span id="seconds">{{ seconds }}</span>
-      <button
-        class="btn btn-secondary"
+      <v-btn
         @click="handleOpenPomodoroTimerModal(task)"
-      >タスク</button>
+        color="red"
+      >
+        実行中のタスク
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
+import { Howl } from 'howler';
+
+const soundUrl = {
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Phrase03-1.mp3?alt=media&token=dbcaf4b4-1f40-4829-a4e5-9a16db304880'
+    }
+
 export default {
   name: "PomodoroTimerBlock",
     data() {
     return {
       task: {},
       totalTime: 0,
-      timer: null
+      timer: null,
+      audio: null
     }
   },
   created() {
     this.startTimer();
     this.task = JSON.parse(localStorage.getItem('pomodoroTask'))
     console.log(this.task)
+  },
+  mounted() {
+    this.audio = new Howl({ src: soundUrl.alert })
+    this.audio.volume = 1.0
   },
   methods: {
     fetchTime: function() {
@@ -43,6 +56,12 @@ export default {
     resetTimer() {
       clearInterval(this.timer);
     },
+    startAlert() {
+      if(!localStorage.getItem('alert')) {
+        this.audio.play();
+        localStorage.alert = "1"
+      }
+    },
     padTime(time) {
       return (time < 10 ? "0" : "") + time;
     },
@@ -53,6 +72,7 @@ export default {
       } else {
         this.totalTime = 0;
         this.resetTimer();
+        this.startAlert();
       }
     },
     handleOpenPomodoroTimerModal(task) {
@@ -74,6 +94,8 @@ export default {
 
 <style scoped>
   .timer{
-    background-color: greenyellow;
+    background-color: #9ecca4;
+    border-radius: 10px;
+    width: 300px;
   }
 </style>

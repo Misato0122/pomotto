@@ -1,70 +1,95 @@
 <template>
   <div>
-    <b-card bg-variant="light">
-        <h2>登録ページ</h2>
-        <b-form-group
-          label="名前:"
-          label-for="name"
-          label-cols-sm="3"
-          label-align-sm="right"
-        >
-          <b-form-input 
-          id="name"
-          v-model="user.name"
+      <v-card width="500px" class="mx-auto mt-5">
+        <v-card-title>
+          <h1 class="display-1">サインアップ</h1>
+        </v-card-title>
+        <v-card-text>
+          <validation-observer
+            ref="observer"
+            v-slot="{ invalid }"
           >
-          </b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="メールアドレス:"
-          label-for="email"
-          label-cols-sm="3"
-          label-align-sm="right"
-        >
-          <b-form-input 
-          id="email"
-          v-model="user.email"
+            <v-form @submit.prevent="submit">
+              <validation-provider
+                v-slot="{ errors }"
+                name="ユーザー名"
+                rules="required"
+              >
+                <v-text-field 
+                prepend-icon="mdi-account"
+                v-model="user.name"
+                label="ユーザー名"
+                required
+                ></v-text-field>
+                <span class="text-danger">{{ errors[0] }}</span>
+              </validation-provider>
+              <validation-provider
+                v-slot="{ errors }"
+                name="メールアドレス"
+                rules="required|email"
+              >
+                <v-text-field
+                prepend-icon="mdi-email"
+                v-model="user.email"
+                label="メールアドレス"
+                required
+                ></v-text-field>
+              <span class="text-danger">{{ errors[0] }}</span>
+              </validation-provider>
+              <validation-provider
+                v-slot="{ errors }"
+                name="パスワード"
+                rules="required|min:5"
+                vid="password"
+              >
+                <v-text-field 
+                prepend-icon="mdi-key-variant"
+                v-model="user.password"
+                label="パスワード"
+                required
+                ></v-text-field>
+              <span class="text-danger">{{ errors[0] }}</span>
+              </validation-provider>
+              <validation-provider
+                v-slot="{ errors }"
+                name="パスワード確認"
+                rules="required|min:5|password_confirmed:@password"
+              >
+                <v-text-field 
+                prepend-icon="mdi-key-variant"
+                v-model="user.password_confirmation"
+                label="パスワード確認"
+                required
+                ></v-text-field>
+              <span class="text-danger">{{ errors[0] }}</span>
+              </validation-provider>
+              <br>
+              <v-btn
+              block
+              color="success"
+              class="mr-4"
+              @click="handleAddRegisterUser(user)"
+              type="submit"
+              :disabled="invalid"
+              >
+              ユーザー登録
+              </v-btn>
+            </v-form>
+          </validation-observer>
+          <router-link
+            :to="{ name: 'LoginPage' }"
+            class="d-flex align-items-center justify-content-center"
           >
-          </b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="パスワード:"
-          label-for="password"
-          label-cols-sm="3"
-          label-align-sm="right"
-        >
-          <b-form-input 
-          id="password"
-          v-model="user.password"
-          >
-          </b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="パスワード確認:"
-          label-for="password_confirmation"
-          label-cols-sm="3"
-          label-align-sm="right"
-        >
-          <b-form-input 
-          id="password_confirmation"
-          v-model="user.password_confirmation"
-          >
-          </b-form-input>
-        </b-form-group>
-        <button
-          class="btn btn-secondary"
-          @click="handleAddRegisterUser(user)"
-        >
-        登録
-        </button>
-    </b-card>
+            ログインはこちら
+          </router-link>
+        </v-card-text>
+      </v-card>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
+
 export default {
   name: "RegisterPage",
   data() {
@@ -78,11 +103,16 @@ export default {
     }
   },
   methods: {
+    ...mapMutations( "messages", ['setContent']),
     registerUser(user) {
       console.log(user)
       this.$axios.post('/users', {user: user})
       .then(res => {
         console.log(res.data),
+        this.$store.commit(`messages/setContent`, {
+          content: 'ユーザー作成に成功しました',
+          timeout: 6000
+        }),
         this.$router.push('/login')
       })
       .catch(err => console.log(err.status))
@@ -93,6 +123,9 @@ export default {
       } catch(err) {
         console.log(err)
       }
+    },
+    submit() {
+      this.$refs.observer.validate()
     }
   }
 }

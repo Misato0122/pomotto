@@ -7,53 +7,69 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <b-form-group
-              id="title"
-              label="タイトル"
-              label-for="title"
-              valid-feedback="OK!"
-              :invalid-feedback="invalidTitleFeedback"
-              :state="titleState"
+            <validation-observer
+              ref="obserber"
+              v-slot="{ invalid }"
             >
-              <b-form-input id="title" v-model="task.title" trim></b-form-input>
-            </b-form-group>
-            <b-form-group
-              id="content"
-              label="詳細"
-              label-for="content"
-              description="こちらは入力しなくても大丈夫です"
-            >
-              <b-form-textarea id="content" v-model="task.content"></b-form-textarea>
-            </b-form-group>
-            <b-form-group
-              id="deadline"
-              label="締め切り日"
-              label-for="deadline"
-              :invalid-feedback="invalidDeadlineFeedback"
-              :state="deadlineState"
-            >
-              <b-form-datepicker 
-                type="date"
-                id="deadline"
-                v-model="task.deadline"
-                class="mb-2"
-              />
-            </b-form-group>
+              <v-form @submit.prevent="submit">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="見出し"
+                  rules="required"
+                >
+                  <v-text-field
+                    v-model="task.title"
+                    label="見出し"
+                    required
+                  >
+                  </v-text-field>
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </validation-provider>
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="詳細"
+                >
+                  <v-text-field
+                    v-model="task.content"
+                    label="詳細"
+                    description="こちらは入力しなくても大丈夫です"
+                  >
+                  </v-text-field>
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </validation-provider>
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="締め切り日"
+                  rules="required"
+                >
+                  <v-date-picker
+                    v-model="task.deadline"
+                    label="締め切り日"
+                    required
+                  >
+                  </v-date-picker>
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </validation-provider>
+                <br>
+                <v-btn
+                  block
+                  color="success"
+                  @click="createTask(task)"
+                  type="submit"
+                  :disabled="invalid"
+                >
+                やること追加
+                </v-btn>
+              </v-form>
+            </validation-observer>
           </div>
           <div class="modal-footer">
-            <button
-              class="btn btn-success"
-              @click="createTask(task)"
-            >
-              追加
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
+            <v-btn
               @click="handleCloseModal"
+              color="secondary"
             >
               閉じる
-            </button>
+            </v-btn>
           </div>
         </div>
       </div>
@@ -95,6 +111,9 @@ export default {
     },
     createTask(task) {
       this.$emit('create-task', task)
+    },
+    submit() {
+      this.$refs.observer.validate()
     }
   }
 }

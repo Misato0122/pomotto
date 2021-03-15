@@ -7,7 +7,11 @@ Rails.application.routes.draw do
         get 'pomodoro_count'
       end
     end
-    resources :users, only: :create
+    resources :users, only: :create # do
+    #   collection do
+    #     post 'guest_login'
+    #   end
+    # end
     resource :profile, only: %i[show update]
     resource :session, only: %i[create destroy]
     resource :pomodoro, only: :create do

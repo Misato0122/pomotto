@@ -1,18 +1,49 @@
 <template>
   <div>
     <div class="card my-3 p-10">
-      <div class="card-body">
-        <span>
-        <input type="checkbox" v-model="task.status" true-value="done" false-value="todo" @change="changeTaskStatus(task)">
-        {{ task.status }}
-        <h5 class="card-title">{{ task.title }}</h5>
-        <p class="card-text">{{ task.deadline }}
-          <button class="btn btn-primary" @click="handleOpenDetailTaskModal(task)">詳細</button>
+      <div class="card-body text-align-center">
+          <input 
+          type="checkbox"
+          v-model="task.status" 
+          true-value="done" 
+          false-value="todo" 
+          @change="changeTaskStatus(task)"
+          >
+          <span class="card-title text-center" style="font-size: 25px;">{{ task.title }}</span>
+          <br>
+          <span class="card-text text-center" style="font-size: 15px; color: #00917c;">締め切り日:  {{ task.deadline }}</span>
+        <span class="float-right">
           <slot name="start-button">
           </slot>
-          <button class="btn btn-secondary" v-if="task.status == 'todo'" @click="handleOpenEditTaskModal(task)">編集</button>
-          <button class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
-        </p>
+          <v-btn
+            @click="handleOpenDetailTaskModal(task)"
+            fab
+            color="light-blue"
+          >
+            <v-icon>
+              mdi-dots-horizontal
+            </v-icon>
+          </v-btn>
+          <v-btn
+            fab
+            color="#b4aee8"
+            v-if="task.status == 'todo'" 
+            @click="handleOpenEditTaskModal(task)"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+          <v-btn
+            fab
+            color="red"
+            v-if="task.status == 'done'" 
+            @click="handleDeleteTask(task)"
+          >
+            <v-icon dark>
+              mdi-delete
+            </v-icon>
+          </v-btn>
         </span>
       </div>
     </div>
@@ -24,7 +55,7 @@ export default {
   name: 'TaskItem',
   data() {
     return {
-      visiblePomodoroStartButton: true
+      visiblePomodoroStartButton: true,
     }
   },
   props: {

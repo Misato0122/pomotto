@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_063030) do
+ActiveRecord::Schema.define(version: 2021_03_14_063542) do
 
   create_table "pomodoros", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "task_id", null: false
+    t.bigint "task_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["task_id"], name: "index_pomodoros_on_task_id"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2021_02_25_063030) do
     t.string "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "role", default: 0, null: false
+    t.text "description"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

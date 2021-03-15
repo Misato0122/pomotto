@@ -7,27 +7,37 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            {{ task.status }}
-            <br>
-            {{ task.title}}
-            <br>
-            {{ task.content}}
-            <br>
-            {{ task.deadline}}
-            <br>
-            <TaskChart
-              v-if="loaded"
-              :labels="labels"
-              :datasets="datasets"
-            />
-            <br>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              @click="handleCloseModal"
-            >
-              閉じる
-            </button>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>やること</v-list-item-subtitle>
+                    <v-list-item-title>{{ task.title }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>実行状況</v-list-item-subtitle>
+                    <v-list-item-title>{{ task.status }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>詳細</v-list-item-subtitle>
+                    <v-list-item-title>{{ task.content }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <TaskChart
+                  v-if="loaded"
+                  :labels="labels"
+                  :datasets="datasets"
+                />
+            <div class="modal-footer">
+              <v-btn
+                @click="handleCloseModal"
+                color="secondary"
+              >
+                閉じる
+              </v-btn>
+            </div>
           </div>
         </div>
       </div>

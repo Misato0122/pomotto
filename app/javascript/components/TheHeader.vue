@@ -1,22 +1,12 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <template v-if="!user">
         <router-link
           :to="{ name: 'TopIndex' }"
           tag="b-navbar-brand"
         >
         Pomotto
         </router-link>
-      </template>
-      <template v-else>
-      <router-link
-        :to="{ name: 'TaskIndex' }"
-        tag="b-navbar-brand"
-      >
-        Pomotto
-      </router-link>
-      </template>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -27,31 +17,44 @@
           <template v-if="!user">
             <b-nav-item right>
               <router-link
+                :to="{ name: 'RegisterPage' }"
+                tag="em"
+              >
+              サインアップ
+              </router-link>
+              </b-nav-item>
+              <b-nav-item right>
+              <router-link
                 :to="{ name: 'LoginPage' }"
                 tag="em"
               >
-              Login
+              ログイン
               </router-link>
             </b-nav-item>
           </template>
           <template v-else>
-          <b-nav-item-dropdown right text="User">
+            <b-nav-item right>
               <router-link
                 :to="{ name: 'TaskIndex' }"
-                tag="b-dropdown-item"
-                
+                tag="em"
               >
-                タスク一覧
+              Todoリスト
               </router-link>
+            </b-nav-item>
+            <b-nav-item right>
               <router-link
                 :to="{ name: 'ProfilePage' }"
-                tag="b-dropdown-item"
-                
+                tag="em"
               >
-                Profile
+              マイページ
               </router-link>
-              <b-dropdown-item @click="handleLogout">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+            </b-nav-item>
+            <b-nav-item 
+              right
+              @click="handleLogout"
+            >
+              ログアウト
+            </b-nav-item>
           </template>
         </b-navbar-nav>
       </b-collapse>
@@ -63,6 +66,11 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TheHeader',
+  data() {
+    return {
+      image_src: require("../../assets/images/pomotto.png")
+    }
+  },
   computed: {
     ...mapGetters("users", ["user"])
   },

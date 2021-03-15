@@ -7,34 +7,56 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <label for="name">名前</label>
-            <input
-              id="name"
-              v-model="user.name"
-              type="text"
-              class="form-control"
+          <validation-observer
+          ref="obserber"
+          v-slot="{ invalid }"
+          >
+          <v-form @submit.prevent="submit">
+            <validation-provider
+              v-slot="{ errors }"
+              name="ユーザー名"
+              rules="required"
             >
-            <label for="email">メールアドレス</label>
-            <textarea
-              id="email"
-              v-model="user.email"
-              class="form-control"
-            />
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-success"
-              @click="updateUser(user)"
+              <v-text-field
+                v-model="user.name"
+                label="ユーザー名"
+                required
+              >
+              </v-text-field>
+              <span class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="プロフィール"
+            >
+              <v-text-field
+                v-model="user.description"
+                label="プロフィール"
+                required
+              >
+              </v-text-field>
+              <span class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+            <v-btn
+            block
+            color="success"
+            class="mr-4"
+            @click="updateUser(user)"
+            type="submit"
+            :disabled="invalid"
             >
               更新
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
+            </v-btn>
+          </v-form>
+          </validation-observer>
+          </div>
+          <div class="modal-footer">
+            <v-btn
               @click="handleCloseModal"
+              color="secondary"
             >
               閉じる
-            </button>
+            </v-btn>
           </div>
         </div>
       </div>
@@ -58,6 +80,9 @@ export default {
     },
     updateUser(user) {
       this.$emit('update-user', user)
+    },
+    submit() {
+      this.$refs.observer.validate()
     }
   }
 }

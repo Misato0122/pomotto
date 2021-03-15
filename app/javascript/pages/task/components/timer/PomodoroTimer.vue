@@ -3,30 +3,46 @@
      <div class="modal" @click.self="handleCloseModal(task)">
        <div class="modal-dialog">
          <div class="modal-content">
-           <div class="modal-header">
-             <h4 class="modal-title">{{ task.title }}</h4>
-             <button type="button" class="close" v-on:click="handleCloseModal(task)">×</button>
-           </div>
            <div class="modal-body">
-             <div class="task-information">
-
+             <div 
+              class="d-flex align-items-center justify-content-center"
+              style="font-size: 20px;"
+             >
+              <p>現在行っているタスク</p>
              </div>
-             <div class="timer">
-              <span id="minutes">{{ minutes }}</span>
-              <span id:="middle">:</span>
-              <span id="seconds">{{ seconds }}</span>
+             <div class="task-information d-flex align-items-center justify-content-center">
+               <p>{{ task.title }}</p>
+             </div>
+             <div class="timer mx-auto">
+               <div class="d-flex align-items-center justify-content-center" style="font-size: 100px;">
+                <span id="minutes">{{ minutes }}</span>
+                <span id:="middle">:</span>
+                <span id="seconds">{{ seconds }}</span>
+               </div>
             </div>
+            <br><br>
             <div id="buttons">
-              <button 
+              <v-btn
+                color="#ff7171"
+                block
                 v-if="completeButton"
                 @click="handleCreatePomodoro(task)"
               >
-              complete!
-              </button>
+                Complete!
+              </v-btn>
             </div>
+            <br>
+            <small>※モーダルを閉じるときは2秒程置いてください</small>
+            <br>
+            <small>※タイマーブロックが表示されなかった場合はリロードすると表示されます。</small>
            </div>
            <div class="modal-footer">
-             <button type="button" class="btn btn-primary">フッターのボタンなど</button>
+             <v-btn
+              color="secondary"
+              @click="handleCloseModal(task)"
+             >
+              閉じる
+             </v-btn>
            </div>
          </div>
        </div>
@@ -36,6 +52,12 @@
 </template>
 
 <script>
+import { Howl } from 'howler';
+
+
+const soundUrl = {
+    alert: 'https://firebasestorage.googleapis.com/v0/b/pomotto.appspot.com/o/Phrase03-1.mp3?alt=media&token=dbcaf4b4-1f40-4829-a4e5-9a16db304880'
+    }
 export default {
   name: 'PomodoroTimer',
   props: {
@@ -50,11 +72,16 @@ export default {
       totalTime: 0,
       startButton: true,
       completeButton: false,
+      audio: null
     }
   },
   created() {
     this.startTimer();
     console.log(this.totalTime);
+  },
+  mounted() {
+    this.audio = new Howl({ src: soundUrl.alert })
+    this.audio.volume = 1.0
   },
   methods: {
     fetchTime: function() {
@@ -72,6 +99,18 @@ export default {
     resetTimer() {
       clearInterval(this.timer);
     },
+    startAlert() {
+      if(!localStorage.getItem('alert')) {
+        this.audio.play();
+        localStorage.alert = "1"
+      }
+    },
+    stopAlert() {
+      if(localStorage.getItem('alert')) {
+        this.audio.pause();
+        localStorage.removeItem('alert')
+      }
+    },
     padTime(time) {
       return (time < 10 ? "0" : "") + time;
     },
@@ -82,6 +121,7 @@ export default {
       } else {
         this.totalTime = 0;
         this.resetTimer();
+        this.startAlert();
         this.completeButton = true;
       }
     },
@@ -92,6 +132,7 @@ export default {
       localStorage.removeItem('totalSeconds'),
       localStorage.removeItem('pomodoroTask'),
       this.$emit('createPomodoro', task)
+      this.stopAlert();
     }
   },
   computed: {
@@ -110,5 +151,18 @@ export default {
 <style scoped>
   .modal {
   display: block;
+  }
+  .timer {
+    background-color: #9ecca4;
+    border-radius: 10px;
+    width: 300px;
+    height: 150px;
+  }
+  .task-information{
+    height: 40px;
+    font-size: 30px;
+  }
+  small {
+    color: red;
   }
 </style>

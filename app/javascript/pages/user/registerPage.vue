@@ -80,8 +80,18 @@
             :to="{ name: 'LoginPage' }"
             class="d-flex align-items-center justify-content-center"
           >
-            ログインはこちら
+            ユーザーログインはこちら
           </router-link>
+          <hr>
+          <br>
+          <v-btn
+          @click="guestLogin"
+          block
+          color="blue"
+          class="d-flex align-items-center justify-content-center"
+          >
+          ゲストログイン
+          </v-btn>
         </v-card-text>
       </v-card>
   </div>
@@ -104,6 +114,7 @@ export default {
   },
   methods: {
     ...mapMutations( "messages", ['setContent']),
+    ...mapActions("users", ["guestLogin"]),
     registerUser(user) {
       console.log(user)
       this.$axios.post('/users', {user: user})
@@ -126,7 +137,7 @@ export default {
     },
     submit() {
       this.$refs.observer.validate()
-    }
+    },
   }
 }
 </script>

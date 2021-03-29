@@ -16,6 +16,13 @@
         <b-navbar-nav class="ml-auto">
           <template v-if="!user">
             <b-nav-item right>
+              <em
+              @click="guestLogin"
+              >
+              ゲストログイン
+              </em>
+            </b-nav-item>
+            <b-nav-item right>
               <router-link
                 :to="{ name: 'RegisterPage' }"
                 tag="em"
@@ -75,7 +82,7 @@ export default {
     ...mapGetters("users", ["user"])
   },
   methods: {
-    ...mapActions("users", ["logoutUser"]),
+    ...mapActions("users", ["logoutUser", "guestLogin"]),
     async handleLogout() {
       try {
         await this.logoutUser()

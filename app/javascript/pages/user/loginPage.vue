@@ -60,6 +60,16 @@
         >
           ユーザー登録はこちら
         </router-link>
+        <hr>
+          <br>
+          <v-btn
+          @click="guestLogin"
+          block
+          color="blue"
+          class="d-flex align-items-center justify-content-center"
+          >
+          ゲストログイン
+          </v-btn>
       </v-card-text>
     </v-card>
   </div>
@@ -78,9 +88,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions("users", ["loginUser"]),
+    ...mapActions("users", ["loginUser", "guestLogin"]),
     submit() {
       this.$refs.observer.validate();
+    },
+    twitterLogin(){
+      this.$axios.get('/auth/provider', {provider: twitter})
+      .then(res => {
+        console.log(res.data),
+        this.$router.push('/tasks')
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   }
 }

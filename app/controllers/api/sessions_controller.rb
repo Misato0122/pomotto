@@ -5,10 +5,15 @@ class Api::SessionsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @user
 
     render json: @user
-
   end
 
   def destroy
     logout
   end
+
+  def guest_login
+    guest_user = User.find_by!(role: 'guest')
+    auto_login(guest_user)
+    render json: guest_user
+   end
 end

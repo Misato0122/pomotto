@@ -7,6 +7,8 @@ import TaskIndex from "../pages/task/index.vue";
 import RegisterPage from '../pages/user/registerPage.vue';
 import LoginPage from '../pages/user/loginPage.vue';
 import ProfilePage from '../pages/user/ProfilePage.vue';
+import TheTermPage from '../pages/top/TheTerm.vue';
+import ThePrivacyPolicyPage from '../pages/top/ThePrivacyPolicy.vue';
 
 
 Vue.use(VueRouter)
@@ -40,6 +42,16 @@ const router = new VueRouter({
       component: ProfilePage,
       name: "ProfilePage",
       meta: { requiredAuthenticated: true}
+    },
+    {
+      path: '/term_of_service',
+      component: TheTermPage,
+      name: "TheTermPage"
+    },
+    {
+      path: '/privacy_policy',
+      component: ThePrivacyPolicyPage,
+      name: "ThePrivacyPolicyPage"
     }
   ]
 })

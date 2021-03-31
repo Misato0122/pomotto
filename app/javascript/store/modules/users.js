@@ -55,6 +55,14 @@ export default {
       })
       .catch(err => console.log(err.response))
     },
+    deleteUser({ commit }, user){
+      axios.delete(`/users/${user.id}`, user)
+      .then(res => {
+        commit('setUser', null)
+        router.push("/")
+      })
+      .catch(err => console.log(err.response))
+    },
     guestLogin({ commit }) {
       axios.post('/session/guest_login')
       .then(res => {

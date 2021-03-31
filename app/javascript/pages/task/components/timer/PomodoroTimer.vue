@@ -88,7 +88,7 @@ export default {
       if(localStorage.getItem('totalSeconds')) {
         this.totalTime = parseInt(localStorage.getItem('totalSeconds'))
       } else {
-        this.totalTime = 1 * 3
+        this.totalTime = 60 * 25
       }
     },
     startTimer() {

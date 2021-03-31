@@ -22,6 +22,13 @@
           color="primary"
         >編集
         </v-btn>
+        <template v-if="user.role !== 'guest'">
+        <v-btn
+        @click="handleOpenDeleteUserModal(user)"
+        >
+        退会する 
+        </v-btn>
+        </template>
       </div>
     <UserChart 
       v-if="loaded"
@@ -46,6 +53,17 @@
       </UserEditModal>
     </transition>
     <!-- ユーザー編集モーダルここまで -->
+    <!--ユーザー削除確認モーダル-->
+    <transition name="fade">
+      <UserDeleteModal
+        :user="user"
+        v-if="isVisibleUserDeleteModal"
+        @close-delete-modal="handleCloseUserDeleteModal"
+        @delete-user="handleDeleteUser"
+      >
+      </UserDeleteModal>
+    </transition>
+    <!--ユーザー削除確認モーダルここまで-->
   </div>
 </template>
 
@@ -53,6 +71,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import UserEditModal from './UserEditModal.vue';
 import UserChart from './UserChart.vue';
+import UserDeleteModal from './UserDeleteModal.vue';
 
 export default {
   name: 'ProfilePage',
@@ -60,6 +79,7 @@ export default {
     return {
       editUser: {},
       isVisibleUserEditModal: false,
+      isVisibleUserDeleteModal: false,
       loaded: false,
       options: {
         responsive: false
@@ -71,6 +91,7 @@ export default {
   components: {
     UserEditModal,
     UserChart,
+    UserDeleteModal
   },
   computed: {
     ...mapGetters("users", ["user"])
@@ -85,7 +106,7 @@ export default {
     .catch(err => console.log(err.response))
   },
   methods: {
-    ...mapActions("users", ["updateUser"]),
+    ...mapActions("users", ["updateUser", "deleteUser"]),
     handleOpenUserEditModal(user) {
       console.log(user)
       this.isVisibleUserEditModal = true
@@ -103,6 +124,22 @@ export default {
         console.log(err)
       }
     },
+    handleOpenDeleteUserModal(user) {
+      console.log(user)
+      this.isVisibleUserDeleteModal = true
+    },
+    handleCloseUserDeleteModal() {
+      this.isVisibleUserDeleteModal = false;
+    },
+    async handleDeleteUser(user) {
+      try{
+        console.log(user)
+        await this.deleteUser(user)
+        this.handleCloseUserDeleteModal();
+      } catch(err) {
+        console.log(err)
+      }
+    }
   }
 }
 </script>

@@ -113,15 +113,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations( "messages", ['setContent']),
     ...mapActions("users", ["guestLogin"]),
     registerUser(user) {
       console.log(user)
       this.$axios.post('/users', {user: user})
       .then(res => {
         console.log(res.data),
-        this.$store.commit(`messages/setContent`, {
-          content: 'ユーザー作成に成功しました',
+        this.$store.commit(`message/setContent`, {
+          content: 'ログインをお願いします',
           timeout: 6000
         }),
         this.$router.push('/login')

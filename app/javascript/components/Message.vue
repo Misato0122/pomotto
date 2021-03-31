@@ -1,10 +1,7 @@
 <template>
-  <v-alert 
-  type="info"
-  v-if="message !== ''"
-  >
+<v-alert type="info" v-show="message">
   {{ message }}
-  </v-alert>
+</v-alert>
 </template>
 
 <script>
@@ -12,7 +9,7 @@ import { mapState } from 'vuex';
 export default {
   computed: {
     ...mapState({
-      massage: state => state.message.content
+      message: state => state.message.content
     })
   }
 }

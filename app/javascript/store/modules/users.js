@@ -68,7 +68,6 @@ export default {
       .then(res => {
         console.log(res.data)
         commit('setUser', res.data)
-        router.push("/tasks")
       })
       .catch(err => {
         console.log(err.response.data)

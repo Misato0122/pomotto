@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :require_login, only: %i[create]
 
   def create
     @user = User.new(user_params)
@@ -10,11 +10,10 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  # def guest_login
-  #   guest_user = User.find_by!(role: 'guest')
-  #   auto_login(guest_user)
-  #   render json: guest_user
-  # end
+  def destroy
+    current_user.destroy!
+    render json: @user
+  end
 
   private
 

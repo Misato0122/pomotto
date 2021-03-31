@@ -14,6 +14,13 @@
       >
         はじめる
       </v-btn>
+      <v-btn
+        @click="guestLogin"
+        color="blue"
+        x-large
+      >
+        お試しはこちら
+      </v-btn>
       </template>
       <template v-else>
         <v-btn
@@ -72,7 +79,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TopIndex',
   data() {
@@ -87,6 +94,7 @@ export default {
     ...mapGetters("users", ["user"])
   },
   methods: {
+    ...mapActions("users", ["guestLogin"]),
     toRegisterPage() {
       this.$router.push({ name: "RegisterPage" })
     },

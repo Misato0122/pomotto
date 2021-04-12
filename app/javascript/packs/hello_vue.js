@@ -5,38 +5,38 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
-import Vue from 'vue'
-import App from '../app.vue'
-import router from '../router/router.js'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-import axios from '../plugins/axios.js'
-import store from '../store/index.js'
-import vuetify from '../plugins/vuetify.js'
-import '../plugins/veeValidate.js'
-
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
-
-
-Vue.config.productionTip = false
-
-// application.erbのcsrf_meta_tagsから生成されたtokenをリクエストヘッダーに代入している。
-axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
-Vue.prototype.$axios = axios
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
-    vuetify,
-    router,
-    store,
-    render: h => h(App)
-  }).$mount()
-  document.body.appendChild(app.$el)
-})
-
+// import Vue from 'vue'
+// import App from '../app.vue'
+// import router from '../router/router.js'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+// import axios from '../plugins/axios.js'
+// import store from '../store/index.js'
+// import vuetify from '../plugins/vuetify.js'
+// import '../plugins/veeValidate.js'
+// 
+// Vue.use(BootstrapVue)
+// Vue.use(BootstrapVueIcons)
+// 
+// 
+// Vue.config.productionTip = false
+// 
+// // application.erbのcsrf_meta_tagsから生成されたtokenをリクエストヘッダーに代入している。
+// axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
+// Vue.prototype.$axios = axios
+// 
+// 
+// document.addEventListener('DOMContentLoaded', () => {
+//   const app = new Vue({
+//     vuetify,
+//     router,
+//     store,
+//     render: h => h(App)
+//   }).$mount()
+//   document.body.appendChild(app.$el)
+// })
+// 
 
 // The above code uses Vue without the compiler, which means you cannot
 // use Vue to target elements in your existing html templates. You would

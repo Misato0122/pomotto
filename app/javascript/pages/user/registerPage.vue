@@ -115,10 +115,8 @@ export default {
   methods: {
     ...mapActions("users", ["guestLogin"]),
     registerUser(user) {
-      console.log(user)
       this.$axios.post('/users', {user: user})
       .then(res => {
-        console.log(res.data),
         this.$store.commit(`message/setContent`, {
           content: 'ログインをお願いします',
           timeout: 6000

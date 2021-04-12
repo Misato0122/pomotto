@@ -15,14 +15,15 @@
 
     <br><br>
 
+    <div class="button-wrapper">
     <v-btn
-      block
       rounded
       color="success"
       @click="handleOpenCreateTaskModal"
     >
       タスク作成
     </v-btn>
+    </div>
     <TaskList
       task-list-id="todo-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
@@ -213,8 +214,6 @@ export default {
     },
     async handleDeleteTask(task) {
       try{
-        console.log(task)
-        console.log(task.id)
         await this.deleteTask(task)
       } catch(err) {
         console.log(err)
@@ -230,7 +229,6 @@ export default {
     handleCreatePomodoro(task) {
       this.$axios.post('/pomodoro', {task_id: task.id})
       .then(res => {
-        console.log(res.data),
         this.handleClosePomodoroTimerModal();
         this.closePomodoroBlock();
         this.isVisibleBreakTimerBlock = true
@@ -270,5 +268,8 @@ export default {
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+  .button-wrapper {
+    text-align: center;
   }
 </style>

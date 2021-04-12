@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="timer d-flex align-items-center justify-content-center">
-      <span>タスク実行中</span>
+      <span>タスク実行中　</span>
       <span id="minutes">{{ minutes }}</span>
       <span id:="middle">:</span>
-      <span id="seconds">{{ seconds }}</span>
+      <span id="seconds">{{ seconds }}　　</span>
       <v-btn
         @click="handleOpenPomodoroTimerModal(task)"
         color="red"
+        rounded
       >
         実行中のタスク
       </v-btn>
@@ -35,7 +36,6 @@ export default {
   created() {
     this.startTimer();
     this.task = JSON.parse(localStorage.getItem('pomodoroTask'))
-    console.log(this.task)
   },
   mounted() {
     this.audio = new Howl({ src: soundUrl.alert })
@@ -96,6 +96,6 @@ export default {
   .timer{
     background-color: #9ecca4;
     border-radius: 10px;
-    width: 300px;
+    width: 500px;
   }
 </style>

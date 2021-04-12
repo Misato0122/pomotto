@@ -23,6 +23,7 @@ gem 'dotenv-rails'
 gem 'sorcery'
 gem 'pry-rails'
 gem 'pry-nav'
+gem 'meta-tags'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

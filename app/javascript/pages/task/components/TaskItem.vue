@@ -2,14 +2,24 @@
   <div>
     <div class="card my-3 p-10">
       <div class="card-body text-align-center">
+        <div class="status_change_button">
           <input 
+          :id="'change_status' + task.id"
           type="checkbox"
           v-model="task.status" 
           true-value="done" 
           false-value="todo" 
           @change="changeTaskStatus(task)"
           >
-          <span class="card-title text-center" style="font-size: 25px;">{{ task.title }}</span>
+          <label
+            :for="'change_status' + task.id"
+          >
+            <v-icon>
+              mdi-check-bold
+            </v-icon>
+          </label>
+        </div>
+        <span class="card-title text-center" style="font-size: 25px;">{{ task.title }}</span>
           <br>
           <span class="card-text text-center" style="font-size: 15px; color: #00917c;">締め切り日:  {{ task.deadline }}</span>
         <span class="float-right">
@@ -21,7 +31,7 @@
             color="light-blue"
           >
             <v-icon>
-              mdi-dots-horizontal
+              mdi-clipboard-text-outline
             </v-icon>
           </v-btn>
           <v-btn
@@ -80,4 +90,32 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .status_change_button{
+    display:inline-block;
+    position: relative;
+}
+.status_change_button input{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+}
+.status_change_button label{
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: #eee;
+    display: inline-block;
+    cursor: pointer;
+    transition: .5s;
+}
+.status_change_button label:hover,
+.status_change_button input:checked + label{
+    background: #17b978;
+    color: #FFF;
+}
+.status_change_button input:focus + label{
+    box-shadow: 0 0 4px #af975e;
+}
+</style>
 

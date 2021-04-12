@@ -9,6 +9,7 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     logout
+    redirect_to home: :index
   end
 
   def guest_login

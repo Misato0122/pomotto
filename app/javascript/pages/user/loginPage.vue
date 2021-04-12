@@ -92,16 +92,6 @@ export default {
     submit() {
       this.$refs.observer.validate();
     },
-    twitterLogin(){
-      this.$axios.get('/auth/provider', {provider: twitter})
-      .then(res => {
-        console.log(res.data),
-        this.$router.push('/tasks')
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }
   }
 }
 </script>

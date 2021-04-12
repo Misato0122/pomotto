@@ -4,6 +4,7 @@
         <router-link
           :to="{ name: 'TopIndex' }"
           tag="b-navbar-brand"
+          style="cursor: pointer;"
         >
         Pomotto
         </router-link>
@@ -73,11 +74,6 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TheHeader',
-  data() {
-    return {
-      image_src: require("../../assets/images/pomotto.png")
-    }
-  },
   computed: {
     ...mapGetters("users", ["user"])
   },
@@ -86,6 +82,7 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
+        location.reload()
         this.$router.push({name: 'LoginPage'})
       } catch(err) {
         console.log(err)

@@ -108,7 +108,6 @@ export default {
   methods: {
     ...mapActions("users", ["updateUser", "deleteUser"]),
     handleOpenUserEditModal(user) {
-      console.log(user)
       this.isVisibleUserEditModal = true
       this.editUser = Object.assign({}, user)
     },
@@ -117,7 +116,6 @@ export default {
     },
     async handleUpdateUser(user) {
       try{
-        console.log(user)
         await this.updateUser(user)
         this.handleCloseUserEditModal();
       } catch(err) {
@@ -125,7 +123,6 @@ export default {
       }
     },
     handleOpenDeleteUserModal(user) {
-      console.log(user)
       this.isVisibleUserDeleteModal = true
     },
     handleCloseUserDeleteModal() {
@@ -133,7 +130,6 @@ export default {
     },
     async handleDeleteUser(user) {
       try{
-        console.log(user)
         await this.deleteUser(user)
         this.handleCloseUserDeleteModal();
       } catch(err) {

@@ -81,6 +81,7 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
+        location.reload()
         this.$router.push({name: 'LoginPage'})
       } catch(err) {
         console.log(err)

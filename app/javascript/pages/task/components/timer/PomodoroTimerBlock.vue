@@ -35,7 +35,6 @@ export default {
   created() {
     this.startTimer();
     this.task = JSON.parse(localStorage.getItem('pomodoroTask'))
-    console.log(this.task)
   },
   mounted() {
     this.audio = new Howl({ src: soundUrl.alert })

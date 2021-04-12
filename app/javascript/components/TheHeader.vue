@@ -73,11 +73,6 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TheHeader',
-  data() {
-    return {
-      image_src: require("../../assets/images/pomotto.png")
-    }
-  },
   computed: {
     ...mapGetters("users", ["user"])
   },

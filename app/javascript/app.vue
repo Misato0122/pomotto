@@ -30,4 +30,7 @@ p {
   font-size: 2em;
   text-align: center;
 }
+.container {
+  width: 1200px;
+}
 </style>

@@ -4,6 +4,7 @@
         <router-link
           :to="{ name: 'TopIndex' }"
           tag="b-navbar-brand"
+          style="cursor: pointer;"
         >
         Pomotto
         </router-link>

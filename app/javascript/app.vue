@@ -32,5 +32,6 @@ p {
 }
 .container {
   width: 1200px;
+  margin-bottom: 70px;
 }
 </style>

@@ -15,14 +15,15 @@
 
     <br><br>
 
+    <div class="button-wrapper">
     <v-btn
-      block
       rounded
       color="success"
       @click="handleOpenCreateTaskModal"
     >
       タスク作成
     </v-btn>
+    </div>
     <TaskList
       task-list-id="todo-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
@@ -267,5 +268,8 @@ export default {
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+  .button-wrapper {
+    text-align: center;
   }
 </style>

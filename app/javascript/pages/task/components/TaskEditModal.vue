@@ -42,6 +42,9 @@
                     name="締め切り日"
                     rules="required"
                   >
+                    <div class="subheading">
+                      締め切り日
+                    </div>
                     <v-date-picker
                       v-model="task.deadline"
                       label="締め切り日"

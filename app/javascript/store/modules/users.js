@@ -47,7 +47,6 @@ export default {
         commit('setUser', null)
         router.push("/")
       })
-      .catch(err => console.log(err))
     },
     updateUser({ commit }, user){
       axios.patch('/profile', {user: user})

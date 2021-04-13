@@ -63,7 +63,7 @@
         <hr>
           <br>
           <v-btn
-          @click="guestLogin"
+          @click="handleguestLogin"
           block
           color="blue"
           class="d-flex align-items-center justify-content-center"

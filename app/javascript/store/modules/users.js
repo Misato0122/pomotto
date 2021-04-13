@@ -45,6 +45,7 @@ export default {
       axios.delete(`/session`)
       .then(res => {
         commit('setUser', null)
+        router.push("/")
       })
       .catch(err => console.log(err))
     },

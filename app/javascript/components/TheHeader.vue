@@ -82,7 +82,6 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
-        location.reload()
       } catch(err) {
         console.log(err)
       }

@@ -80,12 +80,8 @@ export default {
   methods: {
     ...mapActions("users", ["logoutUser", "guestLogin"]),
     async handleLogout() {
-      try {
-        await this.logoutUser()
-        location.reload()
-      } catch(err) {
-        console.log(err)
-      }
+      await this.logoutUser()
+      location.reload()
     }
   }
 }

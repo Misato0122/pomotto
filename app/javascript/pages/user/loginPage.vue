@@ -33,6 +33,7 @@
               rules="required"
             >
               <v-text-field
+                type="password"
                 prepend-icon="mdi-key-variant"
                 v-model="user.password"
                 label="パスワード"

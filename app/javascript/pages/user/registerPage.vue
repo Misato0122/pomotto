@@ -42,7 +42,8 @@
                 rules="required|min:5"
                 vid="password"
               >
-                <v-text-field 
+                <v-text-field
+                type="password" 
                 prepend-icon="mdi-key-variant"
                 v-model="user.password"
                 label="パスワード"
@@ -56,6 +57,7 @@
                 rules="required|min:5|password_confirmed:@password"
               >
                 <v-text-field 
+                type="password"
                 prepend-icon="mdi-key-variant"
                 v-model="user.password_confirmation"
                 label="パスワード確認"

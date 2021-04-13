@@ -43,7 +43,10 @@ export default {
     },
     logoutUser({ commit }) {
       axios.delete(`/session`)
-      commit('setUser', null)
+      .then(res => {
+        commit('setUser', null)
+      })
+      .catch(err => console.log(err))
     },
     updateUser({ commit }, user){
       axios.patch('/profile', {user: user})

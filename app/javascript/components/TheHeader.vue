@@ -80,8 +80,13 @@ export default {
   methods: {
     ...mapActions("users", ["logoutUser", "guestLogin"]),
     async handleLogout() {
-      await this.logoutUser()
-      location.reload()
+      try {
+        await this.logoutUser()
+        this.$router.push({name: 'LoginPage'})
+        location.reload()
+      } catch(err) {
+        console.log(err)
+      }
     }
   }
 }

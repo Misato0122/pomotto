@@ -82,6 +82,7 @@ export default {
     async handleLogout() {
       try {
         await this.logoutUser()
+        window.location.href = "/"
       } catch(err) {
         console.log(err)
       }

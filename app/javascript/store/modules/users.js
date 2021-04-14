@@ -45,7 +45,7 @@ export default {
       axios.delete(`/session`)
       .then(res => {
         commit('setUser', null)
-        router.push("/")
+        window.location.href = "/"
       })
     },
     updateUser({ commit }, user){

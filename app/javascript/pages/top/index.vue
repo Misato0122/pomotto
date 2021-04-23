@@ -84,10 +84,10 @@ export default {
   name: 'TopIndex',
   data() {
     return {
-      background_image_src: require("../../../assets/images/背景画像.png"),
-      pc_image_src: require("../../../assets/images/パソコンとトマト.png"),
-      megaphone_image_src: require("../../../assets/images/メガホン.png"),
-      bar_graph_image_src: require("../../../assets/images/棒グラフ.png")
+      background_image_src: require("../../../assets/images/desk.png"),
+      pc_image_src: require("../../../assets/images/pc.png"),
+      megaphone_image_src: require("../../../assets/images/megaphone.png"),
+      bar_graph_image_src: require("../../../assets/images/chart.png")
     }
   },
   computed: {

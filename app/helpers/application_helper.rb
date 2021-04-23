@@ -10,7 +10,7 @@ module ApplicationHelper
       canonical: 'https://pomotto12345.herokuapp.com/',
       icon: [
         { href: image_url('favicon.ico') },
-        { href: image_url('pomottoロゴ.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/jpg' },
+        { href: image_url('pomotto.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/jpg' },
       ],
       og: {
         site_name: :site,
@@ -18,7 +18,7 @@ module ApplicationHelper
         description: :description, 
         type: 'website',
         url: :canonical,
-        image: image_url('pomottoロゴ.png'),
+        image: image_url('pomotto.png'),
         locale: 'ja_JP',
       },
       twitter: {

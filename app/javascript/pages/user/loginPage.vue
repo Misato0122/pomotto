@@ -33,6 +33,7 @@
               rules="required"
             >
               <v-text-field
+                type="password"
                 prepend-icon="mdi-key-variant"
                 v-model="user.password"
                 label="パスワード"
@@ -63,7 +64,7 @@
         <hr>
           <br>
           <v-btn
-          @click="guestLogin"
+          @click="handleguestLogin"
           block
           color="blue"
           class="d-flex align-items-center justify-content-center"

@@ -45,8 +45,8 @@ export default {
       axios.delete(`/session`)
       .then(res => {
         commit('setUser', null)
+        window.location.href = "/"
       })
-      .catch(err => console.log(err))
     },
     updateUser({ commit }, user){
       axios.patch('/profile', {user: user})
@@ -66,7 +66,6 @@ export default {
     guestLogin({ commit }) {
       axios.post('/session/guest_login')
       .then(res => {
-        console.log(res.data)
         commit('setUser', res.data)
         router.push("/tasks")
       })

@@ -10,8 +10,19 @@ Todoリストのタスクにポモドーロ・テクニックを付け、統計�
 
 ポモドーロテクニックについては[こちら](https://www.newsweekjapan.jp/stories/carrier/2019/03/post-11867.php)の記事をご覧ください
 
-## 使用画面
 
+## 使用画面
+|タスク作成ボタンからタスク作成|実行ボタンを押すとタイマーモーダル表示|
+|---|---|
+|<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/638638/ae2b7301-3349-279a-4103-01424c89f20a.png">|<img src="https://i.gyazo.com/24d9200b0684b700f811c0b192223d78.png">|
+
+|タイマーが完了したら音が鳴り、完了ボタン表示|完了ボタンを押すと休憩タイマーがスタートする|
+|---|---|
+|<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/638638/dba9ff7a-70f4-06a4-6299-eb362a0cc16c.png">|<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/638638/4d28f96d-fcf9-f1f4-35f3-c6d894b32596.png">|
+
+|プロフィールページで一週間の作業時間を確認できます|タスクにかけた作業時間も確認できます|
+|---|---|
+|<img src="https://i.gyazo.com/35be05448cc31fb5c546e0de67b67c54.png">|<img src="https://i.gyazo.com/405f5f10ce851ce1161193176008c294.png">|
 
 
 ## pomottoを作るにあたっての背景
@@ -34,6 +45,27 @@ Todoリストのタスクにポモドーロ・テクニックを付け、統計�
 
 ### マーケット
 自宅や一人で長時間の学習・作業をする方
+
+
+# 使用技術
+- rails `6.0.3`
+- ruby `2.7.2`
+- Vue.js
+- vuetify
+- bootstrapvue
+- axios(API)
+- Vuex
+- Vee-validate
+- Vue-router
+- Firebase storage(音楽ファイル管理)
+
+## 主要gem
+- sorcery(ログイン認証)
+- vue-cahrtkick(グラフ)
+- rspec-rails(テスト)
+- meta-tags(メタタグ)
+
+
 
 ## 関連記事
 [【個人開発】ポモドーロテクニックとTodoリストを組み合わせた時間管理アプリを作りました](https://qiita.com/Misato0122/items/aad6f79c2763b8eee6e3)

@@ -23,6 +23,9 @@ gem 'dotenv-rails'
 gem 'pry-rails'
 gem 'pry-nav'
 gem 'meta-tags'
+gem 'sorcery'
+gem 'twitter'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -41,7 +44,6 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'sorcery'
 
 end
 

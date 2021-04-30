@@ -1,7 +1,7 @@
 class Api::TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy, :pomodoro_count]
   def index
-    @tasks = current_user.tasks.all
+    @tasks = current_user.tasks.all.order(deadline: :asc)
     render json: @tasks
   end
 

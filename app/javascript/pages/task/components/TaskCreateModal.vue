@@ -90,7 +90,7 @@ export default {
         title: "",
         content: "",
         status: "todo",
-        deadline: ""
+        deadline: new Date().toISOString().substr(0, 10),
       }
     }
   },

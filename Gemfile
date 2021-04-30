@@ -24,6 +24,7 @@ gem 'pry-rails'
 gem 'pry-nav'
 gem 'meta-tags'
 gem 'sorcery'
+gem 'twitter'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

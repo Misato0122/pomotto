@@ -39,6 +39,13 @@
       :width="width"
     />
       </div>
+    <a 
+      :href="twitterUrl"
+      target='_blank' 
+      class="btn btn--blue"
+    >
+      <v-icon>mdi-twitter</v-icon>勉強時間をシェア
+    </a>
     </v-card>
     </div>
 
@@ -85,7 +92,8 @@ export default {
         responsive: false
       },
       height: 300,
-      width: 1100
+      width: 1100,
+      twitterUrl: ""
     }
   },
   components: {
@@ -102,8 +110,16 @@ export default {
       this.labels = res.data.map(pomodoros => pomodoros.day)
       this.datasets = res.data.map(pomodoros => pomodoros.count)
       this.loaded = true
+      var pomo = this.datasets[0]
+      if (pomo == null) {
+        pomo = 0
+      } else {
+        pomo = pomo * 25
+      }
+      this.twitterUrl = "https://twitter.com/share?url=https://pomotto12345.herokuapp.com/&text=今日の勉強時間は" + pomo + "分だったよ!&hashtags=pomotto"
     })
     .catch(err => console.log(err.response))
+    
   },
   methods: {
     ...mapActions("users", ["updateUser", "deleteUser"]),
@@ -135,7 +151,7 @@ export default {
       } catch(err) {
         console.log(err)
       }
-    }
+    },
   }
 }
 </script>
@@ -149,5 +165,28 @@ export default {
   }
   .v-card__text {
     font-size: 20px;
+  }
+  .btn--blue,
+  a.btn--blue {
+    color: #fff;
+    background-color: #00acee;
+  }
+  .btn--blue:hover,
+  a.btn--blue:hover {
+    color: #fff;
+    background: #40e0d0;
+  }
+
+  .fa-position-left {
+    position: absolute;
+    top: calc(50% - .5em);
+    left: 1rem;
+  }
+
+  .btn--radius,
+  a.btn--radius,
+  button.btn--radius
+  {
+      border-radius: 100vh;
   }
 </style>

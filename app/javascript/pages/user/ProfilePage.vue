@@ -31,6 +31,7 @@
         </template>
       </div>
     <UserChart 
+      class="col-md-12 col-md-8 col-sm-12 col-xs-10"
       v-if="loaded"
       :labels="labels"
       :datasets="datasets"

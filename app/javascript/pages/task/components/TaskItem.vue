@@ -2,59 +2,63 @@
   <div>
     <div class="card my-3 p-10">
       <div class="card-body text-align-center">
-        <div class="status_change_button">
-          <input 
-          :id="'change_status' + task.id"
-          type="checkbox"
-          v-model="task.status" 
-          true-value="done" 
-          false-value="todo" 
-          @change="changeTaskStatus(task)"
-          >
-          <label
-            :for="'change_status' + task.id"
-          >
-            <v-icon>
-              mdi-check-bold
-            </v-icon>
-          </label>
+        <div class="row">
+          <div class="col-md-12 col-md-8 col-sm-12 col-xs-10">
+            <div class="status_change_button">
+              <input 
+              :id="'change_status' + task.id"
+              type="checkbox"
+              v-model="task.status" 
+              true-value="done" 
+              false-value="todo" 
+              @change="changeTaskStatus(task)"
+              >
+              <label
+                :for="'change_status' + task.id"
+              >
+                <v-icon>
+                  mdi-check-bold
+                </v-icon>
+              </label>
+            </div>
+            <span class="card-title text-center" style="font-size: 20px;">{{ task.title }}</span>
+              <br>
+              <span class="card-text text-center" style="font-size: 15px; color: #00917c;">締め切り日:  {{ task.deadline }}</span>
+            <span class="float-right">
+              <slot name="start-button">
+              </slot>
+              <v-btn
+                @click="handleOpenDetailTaskModal(task)"
+                fab
+                color="light-blue"
+              >
+                <v-icon>
+                  mdi-clipboard-text-outline
+                </v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                color="#b4aee8"
+                v-if="task.status == 'todo'" 
+                @click="handleOpenEditTaskModal(task)"
+              >
+                <v-icon dark>
+                  mdi-pencil
+                </v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                color="red"
+                v-if="task.status == 'done'" 
+                @click="handleDeleteTask(task)"
+              >
+                <v-icon dark>
+                  mdi-delete
+                </v-icon>
+              </v-btn>
+            </span>
+          </div>
         </div>
-        <span class="card-title text-center" style="font-size: 25px;">{{ task.title }}</span>
-          <br>
-          <span class="card-text text-center" style="font-size: 15px; color: #00917c;">締め切り日:  {{ task.deadline }}</span>
-        <span class="float-right">
-          <slot name="start-button">
-          </slot>
-          <v-btn
-            @click="handleOpenDetailTaskModal(task)"
-            fab
-            color="light-blue"
-          >
-            <v-icon>
-              mdi-clipboard-text-outline
-            </v-icon>
-          </v-btn>
-          <v-btn
-            fab
-            color="#b4aee8"
-            v-if="task.status == 'todo'" 
-            @click="handleOpenEditTaskModal(task)"
-          >
-            <v-icon dark>
-              mdi-pencil
-            </v-icon>
-          </v-btn>
-          <v-btn
-            fab
-            color="red"
-            v-if="task.status == 'done'" 
-            @click="handleDeleteTask(task)"
-          >
-            <v-icon dark>
-              mdi-delete
-            </v-icon>
-          </v-btn>
-        </span>
       </div>
     </div>
   </div>

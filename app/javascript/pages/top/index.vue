@@ -31,13 +31,17 @@
         はじめる
         </v-btn>
       </template>
-      <img :src="background_image_src" height="500px" width="1200px">
+      <div class="flex-row">
+        <div class="align-self-center col-xs-10 col-sm-6 col-md-12 col" style="text-align: center;">
+          <img :src="background_image_src" width="700px">
+        </div>
+      </div>
     </div>
     <br>
     <h2 style="text-align: center">つかいかた</h2>
     <br><br>
     <div class="row flex-row">
-      <div class="align-self-center col-md-5 col" style="text-align: center;">
+      <div class="align-self-center col-md-5 col">
         <img :src="pc_image_src" width="300px">
       </div>
       <div class="align-self-center col-md-7 col">

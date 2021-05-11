@@ -24,25 +24,28 @@
       タスク作成
     </v-btn>
     </div>
-    <TaskList
-      task-list-id="todo-list"
-      @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
-      @handleOpenTaskEditModal="handleOpenEditTaskModal"
-      @handleOpenDetailTask="handleOpenDetailTask"
-      :tasks="todoTasks"
-      @changeTaskStatus="updateTask"
-      @deleteTask="handleDeleteTask"
-      @closePomodoroStartButton="handleCloseBreakTimerBlock"
-      ref="taskList"
-    >
-      <template #header>
-        <div class="h4">
-          やることリスト
-        </div>
-      </template>
-    </TaskList>
+    <div class="task-list">
+      <TaskList
+        task-list-id="todo-list"
+        @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
+        @handleOpenTaskEditModal="handleOpenEditTaskModal"
+        @handleOpenDetailTask="handleOpenDetailTask"
+        :tasks="todoTasks"
+        @changeTaskStatus="updateTask"
+        @deleteTask="handleDeleteTask"
+        @closePomodoroStartButton="handleCloseBreakTimerBlock"
+        ref="taskList"
+      >
+        <template #header>
+          <div class="h4">
+            やることリスト
+          </div>
+        </template>
+      </TaskList>
+    </div>
 
     <TaskList
+      class="col-lg-12 col-md-12 col-sm-12"
       task-list-id="done-list"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimerModal"
       :tasks="doneTasks"
@@ -271,5 +274,8 @@ export default {
   }
   .button-wrapper {
     text-align: center;
+  }
+  .task-list {
+    align-items: center;
   }
 </style>

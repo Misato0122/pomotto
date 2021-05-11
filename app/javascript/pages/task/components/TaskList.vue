@@ -1,5 +1,5 @@
 <template>
-  <div class="col-2 col-lg-12">
+  <div class="col-md-12 col-md-8 col-sm-12 col-xs-10">
     <div 
       :id="taskListId"
       class="bg-light rounded shadow m-3 p-3"
@@ -8,7 +8,7 @@
         タスク区分
       </slot>
       <template v-for="task in tasks">
-      <TaskItem 
+      <TaskItem
       :key="task.id"
       :task="task"
       @handleOpenPomodoroTimer="handleOpenPomodoroTimer"
